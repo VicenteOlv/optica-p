@@ -2,7 +2,7 @@ var tabla;
 
 //Función que se ejecuta al inicio
 function init(){
-	mostrarform(false);
+	mostrarform(1);
 	listar();
 	$("#formulario").on("submit",function(e)
 	{
@@ -16,31 +16,37 @@ function init(){
 //Función limpiar
 function limpiar()
 {
-	$("#curp").val("");
-	$("#nombre").val("");
-	$("#telefono").val("");
-	$("#celular").val("");
-	$("#email").val("");
-	$("#fecha").val("");
-	$("#direccion").val("");
+	$("#id_armazon").val("");
+	$("#modelo").val("");
+	$("#precio").val("");
 }
 
 //Función mostrar formulario
 function mostrarform(flag)
 {
 	limpiar();
-	if (flag)
-	{
-		$("#listadoregistros").hide();
-		$("#formularioregistros").show();
-		$("#btnGuardar").prop("disabled",false);
-		$("#btnagregar").hide();
-	}
-	else
-	{
-		$("#listadoregistros").show();
-		$("#formularioregistros").hide();
-		$("#btnagregar").show();
+	console.log(flag);
+	switch(flag){
+		case 0:
+			$("#formid").hide();
+			$("#listadoregistros").hide();
+			$("#formularioregistros").show();
+			$("#btnGuardar").prop("disabled",false);
+			$("#btnagregar").hide();
+		break;
+		case 1:
+			$("#listadoregistros").show();
+			$("#formularioregistros").hide();
+			$("#btnagregar").show()
+		break;
+		case 2:
+			
+			$("#formid").hide();
+			$("#listadoregistros").hide();
+			$("#formularioregistros").show();
+			$("#btnGuardar").prop("disabled",false);
+			$("#btnagregar").hide();
+		break;
 	}
 }
 
@@ -48,7 +54,7 @@ function mostrarform(flag)
 function cancelarform()
 {
 	limpiar();
-	mostrarform(false);
+	mostrarform(1);
 }
 
 //Función Listar
@@ -67,7 +73,7 @@ function listar()
 		        ],
 		"ajax":
 				{
-					url: '../ajax/cliente.php?op=listar',
+					url: '../ajax/armazon.php?op=listar',
 					type : "get",
 					dataType : "json",						
 					error: function(e){
@@ -88,7 +94,7 @@ function guardaryeditar(e)
 	var formData = new FormData($("#formulario")[0]);
 
 	$.ajax({
-		url: "../ajax/cliente.php?op=guardaryeditar",
+		url: "../ajax/armazon.php?op=guardaryeditar",
 	    type: "POST",
 	    data: formData,
 	    contentType: false,
@@ -97,7 +103,7 @@ function guardaryeditar(e)
 	    success: function(datos)
 	    {                    
 	          bootbox.alert(datos);	          
-	          mostrarform(false);
+	          mostrarform(1);
 	          tabla.ajax.reload();
 	    }
 
@@ -105,24 +111,32 @@ function guardaryeditar(e)
 	limpiar();
 }
 
-function mostrar(curp)
+function mostrar(id_armazon)
 {
-	$.post("../ajax/cliente.php?op=mostrar",{curp : curp}, function(data, status)
+	$.post("../ajax/armazon.php?op=mostrar",{id_armazon : id_armazon}, function(data, status)
 	{
 		data = JSON.parse(data);		
-		mostrarform(true);
+		mostrarform(0);
 
-		$("#curp").val(data.curp);
-		$("#nombre").val(data.nombre_completo);
-		$("#telefono").val(data.telefono);
-		$("#celular").val(data.celular);
-		$("#email").val(data.email);
-		$("#fecha").val(data.fecha_nacimiento);
-		$("#direccion").val(data.direccion);
+		$("#id_armazon").val(data.id_armazon);
+		$("#modelo").val(data.modelo);
+		$("#precio").val(data.precio);
 
  	})
 }
+function mostrar2(id_armazon)
+{
+	$.post("../ajax/armazon.php?op=mostrar",{id_armazon : id_armazon}, function(data, status)
+	{
+		data = JSON.parse(data);		
+		mostrarform(2);
 
+		$("#id_armazon").val(data.id_armazon);
+		$("#modelo").val(data.modelo);
+		$("#precio").val(data.precio);
+
+ 	})
+}
 //Función para desactivar registros
 function desactivar(curp)
 {
@@ -137,9 +151,9 @@ function desactivar(curp)
 	})
 }
 
-function eliminar(curp)
+function eliminar(id_armazon)
 {
-	$.post("../ajax/cliente.php?op=eliminar", {curp : curp}, function(e){
+	$.post("../ajax/armazon.php?op=eliminar", {id_armazon : id_armazon}, function(e){
 		bootbox.alert(e);
 		tabla.ajax.reload();
 	});	

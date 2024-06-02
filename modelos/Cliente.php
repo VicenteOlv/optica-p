@@ -11,17 +11,17 @@ Class Cliente
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($curp,$nombre,$telefono,$celular,$email,$fecha,$id_direccion)
+	public function insertar($curp,$nombre,$telefono,$celular,$email,$fecha,$direccion)
 	{
-		$sql="INSERT INTO clientes (curp,nombre_completo,telefono,celular,email,fecha_nacimiento,id_direccion)
-		VALUES ('$curp','$nombre','$telefono','$celular','$email','$fecha','$id_direccion')";
+		$sql="INSERT INTO clientes (curp,nombre_completo,telefono,celular,email,fecha_nacimiento,direccion)
+		VALUES ('$curp','$nombre','$telefono','$celular','$email','$fecha','$direccion')";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($curp,$nombre,$telefono,$celular,$email,$fecha,$id_direccion)
+	public function editar($curp,$nombre,$telefono,$celular,$email,$fecha,$direccion)
 	{
-		$sql="UPDATE clientes SET nombre_completo='$nombre', telefono='$telefono', celular='$celular', email='$email', fecha_nacimiento='$fecha', id_direccion='$id_direccion' WHERE curp='$curp'";
+		$sql="UPDATE clientes SET nombre_completo='$nombre', telefono='$telefono', celular='$celular', email='$email', fecha_nacimiento='$fecha', direccion='$direccion' WHERE curp='$curp'";
 		return ejecutarConsulta($sql);
 	}
 
@@ -31,7 +31,11 @@ Class Cliente
 		$sql="UPDATE clientes SET condicion='0' WHERE curp='$curp'";
 		return ejecutarConsulta($sql);
 	}
-
+	public function eliminar($curp)
+	{
+		$sql="DELETE FROM clientes WHERE curp = '$curp'";
+		return ejecutarConsulta($sql);
+	}
 	//Implementamos un método para activar categorías
 	public function activar($curp)
 	{
@@ -46,6 +50,12 @@ Class Cliente
 		return ejecutarConsultaSimpleFila($sql);
 	}
 
+	public function existe($curp)
+	{
+		$sql="SELECT * FROM clientes WHERE curp='$curp'";
+		$result = ejecutarConsulta($sql);
+        return $result->num_rows > 0;
+	}
 	//Implementar un método para listar los registros
 	public function listar()
 	{

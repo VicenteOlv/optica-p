@@ -2,7 +2,7 @@
 //Incluímos inicialmente la conexión a la base de datos
 require "../config/Conexion.php";
 
-Class Categoria
+Class Armazon
 {
 	//Implementamos nuestro constructor
 	public function __construct()
@@ -11,45 +11,49 @@ Class Categoria
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($nombre,$descripcion)
+	public function insertar($modelo,$precio)
 	{
-		$sql="INSERT INTO categoria (nombre,descripcion,condicion)
-		VALUES ('$nombre','$descripcion','1')";
+		$sql="INSERT INTO armazon (modelo, precio)
+		VALUES ('$modelo','$precio')";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($idcategoria,$nombre,$descripcion)
+	public function editar($id_armazon,$modelo,$precio)
 	{
-		$sql="UPDATE categoria SET nombre='$nombre',descripcion='$descripcion' WHERE idcategoria='$idcategoria'";
+		$sql="UPDATE armazon SET modelo='$modelo', precio='$precio' WHERE id_armazon='$id_armazon'";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para desactivar categorías
-	public function desactivar($idcategoria)
+	public function desactivar($curp)
 	{
-		$sql="UPDATE categoria SET condicion='0' WHERE idcategoria='$idcategoria'";
+		$sql="UPDATE clientes SET condicion='0' WHERE curp='$curp'";
 		return ejecutarConsulta($sql);
 	}
-
-	//Implementamos un método para activar categorías
-	public function activar($idcategoria)
+	public function eliminar($id_armazon)
 	{
-		$sql="UPDATE categoria SET condicion='1' WHERE idcategoria='$idcategoria'";
+		$sql="DELETE FROM armazon WHERE id_armazon = '$id_armazon'";
+		return ejecutarConsulta($sql);
+	}
+	//Implementamos un método para activar categorías
+	public function activar($curp)
+	{
+		$sql="UPDATE clientes SET condicion='1' WHERE curp='$curp'";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementar un método para mostrar los datos de un registro a modificar
-	public function mostrar($idcategoria)
+	public function mostrar($id_armazon)
 	{
-		$sql="SELECT * FROM categoria WHERE idcategoria='$idcategoria'";
+		$sql="SELECT * FROM armazon WHERE id_armazon='$id_armazon'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
 
 	//Implementar un método para listar los registros
 	public function listar()
 	{
-		$sql="SELECT * FROM categoria";
+		$sql="SELECT * FROM armazon";
 		return ejecutarConsulta($sql);		
 	}
 }
