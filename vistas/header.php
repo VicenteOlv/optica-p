@@ -97,6 +97,11 @@
               <a href="armazon.php">
                 <i class="fa fa-tasks"></i> <span>Armazones</span>
               </a>
+            </li>
+            <li>
+              <a href="historial.php">
+                <i class="fa fa-tasks"></i> <span>Historiales</span>
+              </a>
             </li>   
             <li class="treeview">
               <a href="#">
@@ -107,6 +112,7 @@
               <ul class="treeview-menu">
                 <li><a href="venta.php"><i class="fa fa-circle-o"></i> Ventas</a></li>
                 <li><a href="cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                <li><a href="fiscal.php"><i class="fa fa-circle-o"></i> Datos fiscales</a></li>
               </ul>
             </li>                       
             <li class="treeview">

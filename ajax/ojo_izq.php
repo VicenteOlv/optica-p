@@ -1,52 +1,54 @@
 <?php
-require_once "../modelos/Cliente.php";
+require_once "../modelos/Ojo_izq.php";
 
-$cliente = new Cliente();
+$ojoI = new Ojo_izq();
 
 
-$curp = isset($_POST["curp"]) ? limpiarCadena($_POST["curp"]) : "";
-$nombre = isset($_POST["nombre_completo"]) ? limpiarCadena($_POST["nombre_completo"]) : "";
-$telefono = isset($_POST["telefono"]) ? limpiarCadena($_POST["telefono"]) : "";
-$celular = isset($_POST["celular"]) ? limpiarCadena($_POST["celular"]) : "";
-$email = isset($_POST["email"]) ? limpiarCadena($_POST["email"]) : "";
-$fecha = isset($_POST["fecha_nacimiento"]) ? limpiarCadena($_POST["fecha_nacimiento"]) : "";
-$direccion = isset($_POST["direccion"]) ? limpiarCadena($_POST["direccion"]) : "";
+$id_ojo_izq = isset($_POST["id_ojo_izq"]) ? limpiarCadena($_POST["id_ojo_izq"]) : "";
+$esferico_izq = isset($_POST["esferico_izq"]) ? limpiarCadena($_POST["esferico_izq"]) : "";
+$cilindrico_izq = isset($_POST["cilindrico_izq"]) ? limpiarCadena($_POST["cilindrico_izq"]) : "";
+$eje_izq = isset($_POST["eje_izq"]) ? limpiarCadena($_POST["eje_izq"]) : "";
+$add_izq = isset($_POST["add_izq"]) ? limpiarCadena($_POST["add_izq"]) : "";
+$prisma_izq = isset($_POST["prisma_izq"]) ? limpiarCadena($_POST["prisma_izq"]) : "";
+$altura_oblea_izq = isset($_POST["_izq"]) ? limpiarCadena($_POST["_izq"]) : "";
+$av_izq = isset($_POST["av_izq"]) ? limpiarCadena($_POST["av_izq"]) : "";
+$id_historia = isset($_POST["id_historia"]) ? limpiarCadena($_POST["id_historia"]) : "";
 
 switch ($_GET["op"]) {
 	case 'guardaryeditar':
 
-		if (!($cliente->existe($curp))) {
-			$rspta = $cliente->insertar($curp, $nombre, $telefono, $celular, $email, $fecha, $direccion);
+		if (empty($id_ojo_izq)) {
+			$rspta = $ojoI->insertar($esferico_izq,$cilindrico_izq,$eje_izq,$add_izq,$altura_oblea_izq,$av_izq,$id_historia);
 			echo $rspta ? "Cliente registrado" : "Cliente no se pudo registrar";
 		} else {
-			$rspta = $cliente->editar($curp, $nombre, $telefono, $celular, $email, $fecha, $direccion);
+			$rspta = $ojoI->editar($id_ojo_izq,$esferico,$cilindrico_izq,$eje_izq,$add_izq,$altura_oblea_izq,$av_izq,$id_historia);
 			echo $rspta ? "Cliente actualizado" : "Cliente no se pudo actualizar";
 		}
 		break;
 
 	case 'eliminar':
-		$rspta = $cliente->eliminar($curp);
+		$rspta = $ojoI->eliminar($id_ojo_izq);
 		echo $rspta ? "Cliente eliminado" : "Categoría no se puede desactivar";
 		break;
 
 	case 'desactivar':
-		$rspta = $cliente->desactivar($curp);
+		$rspta = $ojoI->desactivar($id_ojo_izq);
 		echo $rspta ? "Categoría Desactivada" : "Categoría no se puede desactivar";
 		break;
 
 	case 'activar':
-		$rspta = $cliente->activar($curp);
+		$rspta = $ojoI->activar($id_ojo_izq);
 		echo $rspta ? "Categoría activada" : "Categoría no se puede activar";
 		break;
 
 	case 'mostrar':
-		$rspta = $cliente->mostrar($curp);
+		$rspta = $ojoI->mostrar($id_ojo_izq);
 		//Codificar el resultado utilizando json
 		echo json_encode($rspta);
 		break;
 
 	case 'listar':
-		$rspta = $cliente->listar();
+		$rspta = $ojoI->listar();
 		//Vamos a declarar un array
 		$data = array();
 
