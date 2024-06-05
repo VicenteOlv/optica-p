@@ -10,18 +10,22 @@ $cilindrico_izq = isset($_POST["cilindrico_izq"]) ? limpiarCadena($_POST["cilind
 $eje_izq = isset($_POST["eje_izq"]) ? limpiarCadena($_POST["eje_izq"]) : "";
 $add_izq = isset($_POST["add_izq"]) ? limpiarCadena($_POST["add_izq"]) : "";
 $prisma_izq = isset($_POST["prisma_izq"]) ? limpiarCadena($_POST["prisma_izq"]) : "";
-$altura_oblea_izq = isset($_POST["_izq"]) ? limpiarCadena($_POST["_izq"]) : "";
+$altura_oblea_izq = isset($_POST["altura_oblea_izq"]) ? limpiarCadena($_POST["altura_oblea_izq"]) : "";
 $av_izq = isset($_POST["av_izq"]) ? limpiarCadena($_POST["av_izq"]) : "";
 $id_historia = isset($_POST["id_historia"]) ? limpiarCadena($_POST["id_historia"]) : "";
+//$id_historia = ($ultimos = $ojoI->ultimo())["id_historia"];
 
 switch ($_GET["op"]) {
 	case 'guardaryeditar':
 
 		if (empty($id_ojo_izq)) {
-			$rspta = $ojoI->insertar($esferico_izq,$cilindrico_izq,$eje_izq,$add_izq,$altura_oblea_izq,$av_izq,$id_historia);
+			if(empty($id_historia)){
+				$id_historia = ($ultimos = $ojoI->ultimo())["id_historia"];
+			}
+			$rspta = $ojoI->insertar($esferico_izq,$cilindrico_izq,$eje_izq,$add_izq,$prisma_izq,$altura_oblea_izq,$av_izq,$id_historia);
 			echo $rspta ? "Cliente registrado" : "Cliente no se pudo registrar";
 		} else {
-			$rspta = $ojoI->editar($id_ojo_izq,$esferico,$cilindrico_izq,$eje_izq,$add_izq,$altura_oblea_izq,$av_izq,$id_historia);
+			$rspta = $ojoI->editar($id_ojo_izq,$esferico_izq,$cilindrico_izq,$eje_izq,$add_izq,$prisma_izq,$altura_oblea_izq,$av_izq,$id_historia);
 			echo $rspta ? "Cliente actualizado" : "Cliente no se pudo actualizar";
 		}
 		break;
@@ -42,7 +46,7 @@ switch ($_GET["op"]) {
 		break;
 
 	case 'mostrar':
-		$rspta = $ojoI->mostrar($id_ojo_izq);
+		$rspta = $ojoI->mostrar($id_historia);
 		//Codificar el resultado utilizando json
 		echo json_encode($rspta);
 		break;

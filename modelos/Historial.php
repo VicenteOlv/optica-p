@@ -26,7 +26,11 @@ Class Historial
 	}
 
 	public function eliminar($id_historia)
-	{
+	{	
+		$sql = "DELETE FROM ojo_izq WHERE id_historia = '$id_historia'";
+		ejecutarConsulta($sql);
+		$sql = "DELETE FROM ojo_der WHERE id_historia = '$id_historia'";
+		ejecutarConsulta($sql);
         //Probablemente se tendrá que eliminar primero los estudios de los ojos
 		$sql="DELETE FROM historia_clinicas WHERE id_historia = '$id_historia'";
 		return ejecutarConsulta($sql);
@@ -57,7 +61,7 @@ Class Historial
     }
     public function ultimo(){
         $sql = "SELECT id_historia FROM historia_clinicas ORDER BY id_historia DESC LIMIT 1";        
-        return ejecutarConsulta($sql);
+        return ejecutarConsultaSimpleFila($sql);
     }
 }
 

@@ -11,17 +11,17 @@ Class Ojo_izq
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($esferico_izq,$cilindrico_izq,$eje_izq,$add_izq,$altura_oblea_izq,$av_izq,$id_historia)
+	public function insertar($esferico_izq,$cilindrico_izq,$eje_izq,$add_izq,$prisma_izq,$altura_oblea_izq,$av_izq,$id_historia)
 	{
 		$sql="INSERT INTO ojo_izq (esferico_izq,cilindrico_izq,eje_izq,add_izq,prisma_izq,altura_oblea_izq,av_izq,id_historia)
-		VALUES ('$esferico_izq','$cilindrico_izq','$eje_izq','$add_izq','$altura_oblea_izq','$av_izq','$id_historia')";
+		VALUES ('$esferico_izq','$cilindrico_izq','$eje_izq','$add_izq','$prisma_izq','$altura_oblea_izq','$av_izq','$id_historia')";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($id_ojo_izq,$esferico_izq,$cilindrico_izq,$eje_izq,$add_izq,$altura_oblea_izq,$av_izq,$id_historia)
+	public function editar($id_ojo_izq,$esferico_izq,$cilindrico_izq,$eje_izq,$add_izq,$prisma_izq,$altura_oblea_izq,$av_izq,$id_historia)
 	{
-		$sql="UPDATE ojo_izq SET esferico_izq='$esferico_izq', cilindrico_izq='$cilindrico_izq', eje_izq='$eje_izq', add_izq='$add_izq', altura_oblea_izq='$altura_oblea_izq', av_izq='$av_izq', id_historia='$id_historia' WHERE id_ojo_izq='$id_ojo_izq'";
+		$sql="UPDATE ojo_izq SET esferico_izq='$esferico_izq', cilindrico_izq='$cilindrico_izq', eje_izq='$eje_izq', add_izq='$add_izq',prisma_izq='$prisma_izq',altura_oblea_izq='$altura_oblea_izq', av_izq='$av_izq', id_historia='$id_historia' WHERE id_ojo_izq='$id_ojo_izq'";
 		return ejecutarConsulta($sql);
 	}
 
@@ -44,9 +44,9 @@ Class Ojo_izq
 	}
 
 	//Implementar un método para mostrar los datos de un registro a modificar
-	public function mostrar($id_ojo_izq)
+	public function mostrar($id_historia)
 	{
-		$sql="SELECT * FROM ojo_izq WHERE id_ojo_izq='$id_ojo_izq'";
+		$sql="SELECT * FROM ojo_izq WHERE id_historia='$id_historia'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
 
@@ -68,6 +68,11 @@ Class Ojo_izq
 		$sql="SELECT id_ojo_izq FROM ojo_izq WHERE id_historia='$id_historia'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
+
+	public function ultimo(){
+        $sql = "SELECT id_historia FROM historia_clinicas ORDER BY id_historia DESC LIMIT 1";        
+        return ejecutarConsultaSimpleFila($sql);
+    }
 }
 
 ?>

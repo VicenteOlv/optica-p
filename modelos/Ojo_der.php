@@ -11,17 +11,18 @@ Class Ojo_der
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($esferico_der,$cilindrico_der,$eje_der,$add_der,$altura_oblea_der,$av_der,$id_historia)
-	{
-		$sql="INSERT INTO ojo_der (esferico_der,cilindrico_der,eje_der,add_der,prisma,altura_oblea_der,av_der,id_historia)
-		VALUES ('$esferico_der','$cilindrico_der','$eje_der','$add_der','$altura_oblea_der','$av_der','$id_historia')";
+	public function insertar($esferico_der, $cilindrico_der, $eje_der, $add_der, $prisma_der, $altura_oblea_der, $av_der, $id_historia) {
+        $sql="INSERT INTO ojo_der (esferico_der,cilindrico_der,eje_der,add_der,prisma_der,altura_oblea_der,av_der,id_historia)
+		VALUES ('$esferico_der','$cilindrico_der','$eje_der','$add_der','$prisma_der','$altura_oblea_der','$av_der','$id_historia')";
+		var_dump($sql);
 		return ejecutarConsulta($sql);
-	}
+
+    }
 
 	//Implementamos un método para editar registros
-	public function editar($id_ojo_der,$esferico_der,$cilindrico_der,$eje_der,$add_der,$altura_oblea_der,$av_der,$id_historia)
+	public function editar($id_ojo_der,$esferico_der,$cilindrico_der,$eje_der,$add_der,$prisma_der,$altura_oblea_der,$av_der,$id_historia)
 	{
-		$sql="UPDATE ojo_der SET esferico_der='$esferico_der', cilindrico_der='$cilindrico_der', eje_der='$eje_der', add_der='$add_der', altura_oblea_der='$altura_oblea_der', av_der='$av_der', id_historia='$id_historia' WHERE id_ojo_der='$id_ojo_der'";
+		$sql="UPDATE ojo_der SET esferico_der='$esferico_der', cilindrico_der='$cilindrico_der', eje_der='$eje_der', add_der='$add_der',prisma_der='$prisma_der', altura_oblea_der='$altura_oblea_der', av_der='$av_der', id_historia='$id_historia' WHERE id_ojo_der='$id_ojo_der'";
 		return ejecutarConsulta($sql);
 	}
 
@@ -44,9 +45,9 @@ Class Ojo_der
 	}
 
 	//Implementar un método para mostrar los datos de un registro a modificar
-	public function mostrar($id_ojo_der)
+	public function mostrar($id_historia)
 	{
-		$sql="SELECT * FROM ojo_der WHERE id_ojo_der='$id_ojo_der'";
+		$sql="SELECT * FROM ojo_der WHERE id_historia='$id_historia'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
 
@@ -68,6 +69,10 @@ Class Ojo_der
 		$sql="SELECT id_ojo_der FROM ojo_der WHERE id_historia='$id_historia'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
+	public function ultimo(){
+        $sql = "SELECT id_historia FROM historia_clinicas ORDER BY id_historia DESC LIMIT 1";        
+        return ejecutarConsultaSimpleFila($sql);
+    }
 	
 }
 

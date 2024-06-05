@@ -1,5 +1,5 @@
 var tabla;
-
+var id_historia_global;
 //Función que se ejecuta al inicio
 function init(){
 	mostrarform(false);
@@ -114,8 +114,17 @@ function guardaryeditar(e)
 
 	    success: function(datos)
 	    {       
-            
-            
+              
+			$.get("../ajax/historial.php?op=ultimo")
+			.done(function(response) {
+				var data = JSON.parse(response);
+				$("#id_historia").val(data.id_historia);
+			})
+			.fail(function(error) {
+			  console.error("Error:", error);
+			});
+
+			
                 $.ajax({
                     url: "../ajax/ojo_izq.php?op=guardaryeditar",
                     type: "POST",
@@ -125,36 +134,43 @@ function guardaryeditar(e)
             
                     success: function(datos)
                     {           
-                        $.ajax({
-                            url: "../ajax/ojo_der.php?op=guardaryeditar",
-                            type: "POST",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                    
-                            success: function(datos)
-                            {           
-                                        
-                                bootbox.alert(datos);	          
-                                mostrarform(false);
-                                tabla.ajax.reload();
-                            }
-                    
-                        });        
-                        bootbox.alert(datos);	          
-                        mostrarform(false);
+                        
+                        //bootbox.alert(datos);	          
+                        //mostrarform(false);
                         tabla.ajax.reload();
                     }
             
                 });         
+				$.ajax({
+					url: "../ajax/ojo_der.php?op=guardaryeditar",
+					type: "POST",
+					data: formData,
+					contentType: false,
+					processData: false,
+
+					success: function(datos)
+					{           
+								
+						//bootbox.alert(datos);	          
+						//mostrarform(false);
+						tabla.ajax.reload();
+					}
+
+				});
                 bootbox.alert(datos);	          
                 mostrarform(false);
                 tabla.ajax.reload();
 	    }
 
 	});
-	limpiar();
+	        
+	limpiar();s
 }
+
+
+
+
+
 
 function mostrar(id_historia, id_ojo_izq, id_ojo_der)
 {
@@ -166,24 +182,26 @@ function mostrar(id_historia, id_ojo_izq, id_ojo_der)
 
 	//Tenemos que mandar a llamar a las tablas
 	
-	var ojoIzq = JSON.parse(id_ojo_izq);
-	var ojoDer = JSON.parse(id_ojo_der);
+	var ojoIzq = (JSON.parse(id_ojo_izq)).id_ojo_izq;
+	var ojoDer = (JSON.parse(id_ojo_der)).id_ojo_der;
 
-	console.log(ojoIzq.id_historia);
-	console.log(ojoDer.id_historia);
+	console.log(ojoIzq);
+	console.log(ojoDer);
 
 	var data = $.post("../ajax/historial.php?op=mostrar", { id_historia: id_historia });
-    var ojoDerPromise = $.post("../ajax/ojo_der.php?op=mostrar", { id_ojo_der: id_ojo_der });
-    var ojoIzqPromise = $.post("../ajax/ojo_izq.php?op=mostrar", { id_ojo_izq: id_ojo_izq });
-
-	
-	data = JSON.parse(data);		
+    var ojoDerPromise = $.post("../ajax/ojo_der.php?op=mostrar", { id_historia: id_historia });
+    var ojoIzqPromise = $.post("../ajax/ojo_izq.php?op=mostrar", { id_historia: id_historia });
+		
 
     // Luego, usamos $.when para esperar a que todas las promesas se resuelvan
-    $.when(historiaPromise, ojoDerPromise, ojoIzqPromise).done(function(historiaData, ojoDerData, ojoIzqData) {
+    $.when(data, ojoDerPromise, ojoIzqPromise).done(function(historiaData, ojoDerData, ojoIzqData) {
         // Aquí procesamos los datos recibidos de cada solicitud
+		mostrarform(true);
 
-        mostrarform(true);
+		
+		var data = JSON.parse(historiaData[0]);
+        var ojoDer = JSON.parse(ojoDerData[0]);
+        var ojoIzq = JSON.parse(ojoIzqData[0]);
 
         // Datos de historial
         $("#id_historia").val(data.id_historia);
@@ -192,14 +210,14 @@ function mostrar(id_historia, id_ojo_izq, id_ojo_der)
         $("#observaciones").val(data.observaciones);
 
         // Datos de ojo derecho
-        $("#id_ojo_der").val(ojoDer);
-		$("#esferico_der").val(data.esferico_der);
-		$("#cilindrico_der").val(data.cilindrico_der);
-		$("#eje_der").val(data.eje_der);
-		$("#add_der").val(data.add_der);
-		$("#prisma_der").val(data.prisma_der);
-		$("#altura_oblea_der").val(data.altura_oblea_der);
-		$("#av_der").val(data.av_der);
+        $("#id_ojo_der").val(ojoDer.id_ojo_der);
+		$("#esferico_der").val(ojoDer.esferico_der);
+		$("#cilindrico_der").val(ojoDer.cilindrico_der);
+		$("#eje_der").val(ojoDer.eje_der);
+		$("#add_der").val(ojoDer.add_der);
+		$("#prisma_der").val(ojoDer.prisma_der);
+		$("#altura_oblea_der").val(ojoDer.altura_oblea_der);
+		$("#av_der").val(ojoDer.av_der);
 
         // Datos de ojo izquierdo
         $("#id_ojo_izq").val(ojoIzq.id_ojo_izq);
