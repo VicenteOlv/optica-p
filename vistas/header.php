@@ -143,10 +143,10 @@
                 <small class="label pull-right bg-yellow">IT</small>
               </a>
             </li>
-                        
+            <img src="../public/dist/img/imagenLentes.png" alt="Cargando" style="width: 160px; height: 160px; object-fit: cover; border-radius: 50%; display: block; margin: 0 auto;">
+
           </ul>
 
         </section>
         <!-- /.sidebar -->
-        <img src="../public/dist/img/imagenLentes.png" alt="Cargando" style="width: 160px; height: 160px; object-fit: cover; border-radius: 50%; display: block; margin: 0 auto;">
         </aside>
