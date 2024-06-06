@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>OpticaSW | https://www.celestinsw.com/</title>
+    <title>OpticaMPVDA</title> <!--Este es el titulo que se pone en la parte superior de la pestaña-->
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -26,7 +26,7 @@
     <link rel="stylesheet" type="text/css" href="../public/css/bootstrap-select.min.css">
 
   </head>
-  <body class="hold-transition skin-blue-light sidebar-mini">
+  <body class="hold-transition skin-yellow-light sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
@@ -34,7 +34,7 @@
         <!-- Logo -->
         <a href="index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>SW</b>Optica</span>
+          <span class="logo-mini"><b>MV</b>PDA</span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><b>MVPDA</b></span>
         </a>
@@ -107,7 +107,7 @@
               <a href="#">
                 <i class="fa fa-shopping-cart"></i>
                 <span>Ventas</span>
-                 <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="venta.php"><i class="fa fa-circle-o"></i> Ventas</a></li>
@@ -145,6 +145,8 @@
             </li>
                         
           </ul>
+
         </section>
         <!-- /.sidebar -->
-      </aside>
+        <img src="../public/dist/img/imagenLentes.png" alt="Cargando" style="width: 160px; height: 160px; object-fit: cover; border-radius: 50%; display: block; margin: 0 auto;">
+        </aside>
