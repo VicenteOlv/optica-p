@@ -1,4 +1,17 @@
 <?php
+ob_start();
+if (strlen(session_id()) < 1){
+	session_start();//Validamos si existe o no la sesión
+}
+if (!isset($_SESSION["nombre"]))
+{
+  header("Location: ../vistas/login.html");//Validamos el acceso solo a los usuarios logueados al sistema.
+}
+else
+{
+//Validamos el acceso solo al usuario logueado y autorizado.
+if ($_SESSION['historiales']==1)
+{
 require_once "../modelos/Historial.php";
 require_once "../modelos/Ojo_der.php";
 require_once "../modelos/Ojo_izq.php";
@@ -89,3 +102,11 @@ switch ($_GET["op"]) {
 
         break;
 }
+}
+else
+{
+  require 'noacceso.php';
+}
+}
+ob_end_flush();
+?>
