@@ -1,4 +1,5 @@
 var tabla;
+var precio_armazon
 
 //Función que se ejecuta al inicio
 function init(){
@@ -11,8 +12,16 @@ function init(){
 	});
 	//Cargamos los items al select cliente
 	$.post("../ajax/venta.php?op=selectCliente", function(r){
-	            $("#idcliente").html(r);
-	            $('#idcliente').selectpicker('refresh');
+	            $("#rfc").html(r);
+	            $('#rfc').selectpicker('refresh');
+	});
+	$.post("../ajax/venta.php?op=selectArmazon", function(r){
+		$("#id_armazon").html(r);
+		$('#id_armazon').selectpicker('refresh');
+	});
+	$.post("../ajax/venta.php?op=selectHistorial", function(r){
+		$("#id_historia").html(r);
+		$('#id_historia').selectpicker('refresh');
 	});
 	$('#mVentas').addClass("treeview active");
     $('#lVentas').addClass("active");
@@ -67,7 +76,57 @@ function mostrarform(flag)
 		$("#btnagregar").show();
 	}
 }
+function mostrarprecio(id_armazon)
+{
+	var formData = new FormData($("#formulario")[0]);
+	$.ajax({
+		url: "../ajax/venta.php?op=precio_armazon",
+	    type: "POST",
+	    data: formData,
+	    contentType: false,
+	    processData: false,
 
+	    success: function(datos)
+	    {                
+			var data = JSON.parse(datos);    
+	        //bootbox.alert(datos);	    
+			$("#precio_venta").val(data.precio_venta);
+			precio_armazon=data.precio_venta;
+			//console.log(precio_armazon);
+	          //mostrarform(false);
+	          //listar();
+			agregarDetalle(precio_armazon);
+	    }
+
+	});
+	/*
+	$.get("../ajax/venta.php?op=precio_armazon")
+			.done(function(response) {
+				bootbox.alert(response);
+				var data = JSON.parse(response);
+				$("#precio_venta").val(data.precio_venta);
+			})
+			.fail(function(error) {
+			  console.error("Error:", error);
+	});
+	
+	//var data = $.post("../ajax/historial.php?op=mostrar", { id_historia: id_historia });
+	$.post("../ajax/venta.php?op=precio_venta",{id_armazon : id_armazon}, function(data, status)
+	{
+		//console.log(data);
+		bootbox.alert(data);
+		data = JSON.parse(data);		
+		//console.log(data);
+		$("#precio_armazon").val(data.precio_venta);
+
+	})*/
+	
+}
+function mostrarArticulo(){
+	var id_armazon = document.getElementById("id_armazon").value;
+	console.log(id_armazon);
+	mostrarprecio(id_armazon);
+}
 //Función cancelarform
 function cancelarform()
 {
@@ -231,19 +290,21 @@ function marcarImpuesto()
     }
   }
 
-function agregarDetalle(idarticulo,articulo,precio_venta)
+function agregarDetalle(precio_venta)
   {
   	var cantidad=1;
     var descuento=0;
-
-    if (idarticulo!="")
-    {
-    	var subtotal=cantidad*precio_venta;
+	var valor_cristal = document.getElementById("precio_cristal").value;
+	var valor_armazon = precio_venta;
+	//console.log(valor_cristal);
+	//console.log(precio_armazon);
+	var valor_lente = parseInt(valor_armazon) + parseInt(valor_cristal);
+	console.log(precio_venta);
+    	var subtotal=cantidad*(valor_lente);
     	var fila='<tr class="filas" id="fila'+cont+'">'+
     	'<td><button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button></td>'+
-    	'<td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>'+
     	'<td><input type="number" name="cantidad[]" id="cantidad[]" value="'+cantidad+'"></td>'+
-    	'<td><input type="number" name="precio_venta[]" id="precio_venta[]" value="'+precio_venta+'"></td>'+
+    	'<td><input type="number" name="precio_venta[]" id="precio_venta[]" value="'+valor_lente+'"></td>'+
     	'<td><input type="number" name="descuento[]" value="'+descuento+'"></td>'+
     	'<td><span name="subtotal" id="subtotal'+cont+'">'+subtotal+'</span></td>'+
     	'<td><button type="button" onclick="modificarSubototales()" class="btn btn-info"><i class="fa fa-refresh"></i></button></td>'+
@@ -252,11 +313,7 @@ function agregarDetalle(idarticulo,articulo,precio_venta)
     	detalles=detalles+1;
     	$('#detalles').append(fila);
     	modificarSubototales();
-    }
-    else
-    {
-    	alert("Error al ingresar el detalle, revisar los datos del artículo");
-    }
+
   }
 
   function modificarSubototales()

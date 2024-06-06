@@ -16,26 +16,58 @@ require_once "../modelos/Venta.php";
 
 $venta=new Venta();
 
-$idventa=isset($_POST["idventa"])? limpiarCadena($_POST["idventa"]):"";
-$idcliente=isset($_POST["idcliente"])? limpiarCadena($_POST["idcliente"]):"";
-$idusuario=$_SESSION["idusuario"];
-$tipo_comprobante=isset($_POST["tipo_comprobante"])? limpiarCadena($_POST["tipo_comprobante"]):"";
-$serie_comprobante=isset($_POST["serie_comprobante"])? limpiarCadena($_POST["serie_comprobante"]):"";
-$num_comprobante=isset($_POST["num_comprobante"])? limpiarCadena($_POST["num_comprobante"]):"";
-$fecha_hora=isset($_POST["fecha_hora"])? limpiarCadena($_POST["fecha_hora"]):"";
-$impuesto=isset($_POST["impuesto"])? limpiarCadena($_POST["impuesto"]):"";
-$total_venta=isset($_POST["total_venta"])? limpiarCadena($_POST["total_venta"]):"";
+$id_venta=isset($_POST["id_venta"])? limpiarCadena($_POST["id_venta"]):"";
+$rfc=isset($_POST["rfc"])? limpiarCadena($_POST["rfc"]):"";
+$id_usuario="";//$_SESSION["id_usuario"];
+$total=isset($_POST["total"])? limpiarCadena($_POST["total"]):"";
+$fecha=isset($_POST["fecha"])? limpiarCadena($_POST["fecha"]):"";
+$id_armazon=isset($_POST["id_armazon"])? limpiarCadena($_POST["id_armazon"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':
 		if (empty($idventa)){
-			$rspta=$venta->insertar($idcliente,$idusuario,$tipo_comprobante,$serie_comprobante,$num_comprobante,$fecha_hora,$impuesto,$total_venta,$_POST["idarticulo"],$_POST["cantidad"],$_POST["precio_venta"],$_POST["descuento"]);
+			$rspta=$venta->insertar($rfc,$id_usuario,$total,$fecha,$_POST["idarticulo"],$_POST["cantidad"],$_POST["precio_venta"],$_POST["descuento"],$id_armazon,$_POST["id_historia"],$_POST["precio_cristal"],$_POST["material"],$_POST["recubrimiento"]);
 			echo $rspta ? "Venta registrada" : "No se pudieron registrar todos los datos de la venta";
 		}
 		else {
 		}
 	break;
 
+	case 'selectCliente':
+		require_once "../modelos/Fiscal.php";
+		$fiscal = new Fiscal();
+	
+		$rspta = $fiscal->listarN();
+	
+		while ($reg = $rspta->fetch_object())
+		{
+			echo '<option value=' . $reg->rfc . '>' . $reg->nombre_completo . '</option>';
+		}
+		break;
+	
+	case 'selectArmazon':
+			require_once "../modelos/Armazon.php";
+			$armazon = new Armazon();
+		
+			$rspta = $armazon->listar();
+		
+			while ($reg = $rspta->fetch_object())
+			{
+				echo '<option value=' . $reg->id_armazon . '>' . $reg->modelo . '</option>';
+			}
+	break;	
+
+	case 'selectHistorial':
+		require_once "../modelos/Historial.php";
+		$historial = new Historial();
+	
+		$rspta = $historial->listar();
+	
+		while ($reg = $rspta->fetch_object())
+		{
+			echo '<option value=' . $reg->id_historial . '>' . $reg->fecha . '</option>';
+		}
+	break;/*
 	case 'anular':
 		$rspta=$venta->anular($idventa);
  		echo $rspta ? "Venta anulada" : "Venta no se puede anular";
@@ -96,7 +128,7 @@ switch ($_GET["op"]){
  					'<button class="btn btn-warning" onclick="mostrar('.$reg->idventa.')"><i class="fa fa-eye"></i></button>').
  					'<a target="_blank" href="'.$url.$reg->idventa.'"> <button class="btn btn-info"><i class="fa fa-file"></i></button></a>',
  				"1"=>$reg->fecha,
- 				"2"=>$reg->cliente,
+ 				"2"=>$reg->$fiscal,
  				"3"=>$reg->usuario,
  				"4"=>$reg->tipo_comprobante,
  				"5"=>$reg->serie_comprobante.'-'.$reg->num_comprobante,
@@ -125,7 +157,7 @@ switch ($_GET["op"]){
 				echo '<option value=' . $reg->idcliente . '>' . $reg->nombre . '</option>';
 				}
 	break;
-
+	
 	case 'listarArticulosVenta':
 		require_once "../modelos/Articulo.php";
 		$articulo=new Articulo(); //Sustituir por los lentes ya armados
@@ -151,6 +183,12 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
+	break;*/
+	case 'precio_armazon':
+		$rspta = $venta->precioArmazon($id_armazon);
+		//var_dump($rspta);
+		//var_dump(json_encode($rspta));
+		echo (json_encode($rspta));
 	break;
 }
 //Fin de las validaciones de acceso
