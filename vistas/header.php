@@ -36,7 +36,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>SW</b>Optica</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>SWoptica</b></span>
+          <span class="logo-lg"><b>MVPDA</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
