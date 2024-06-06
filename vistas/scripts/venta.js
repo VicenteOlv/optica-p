@@ -78,15 +78,49 @@ function mostrarform(flag)
 }
 function mostrarprecio(id_armazon)
 {
+	var formData = new FormData($("#formulario")[0]);
+	$.ajax({
+		url: "../ajax/venta.php?op=precio_armazon",
+	    type: "POST",
+	    data: formData,
+	    contentType: false,
+	    processData: false,
+
+	    success: function(datos)
+	    {                
+			var data = JSON.parse(datos);    
+	        //bootbox.alert(datos);	    
+			$("#precio_venta").val(data.precio_venta);
+			precio_armazon=data.precio_venta;
+			//console.log(precio_armazon);
+	          //mostrarform(false);
+	          //listar();
+			agregarDetalle(precio_armazon);
+	    }
+
+	});
+	/*
+	$.get("../ajax/venta.php?op=precio_armazon")
+			.done(function(response) {
+				bootbox.alert(response);
+				var data = JSON.parse(response);
+				$("#precio_venta").val(data.precio_venta);
+			})
+			.fail(function(error) {
+			  console.error("Error:", error);
+	});
+	
+	//var data = $.post("../ajax/historial.php?op=mostrar", { id_historia: id_historia });
 	$.post("../ajax/venta.php?op=precio_venta",{id_armazon : id_armazon}, function(data, status)
 	{
-		console.log(data);
+		//console.log(data);
+		bootbox.alert(data);
 		data = JSON.parse(data);		
-		console.log(data);
+		//console.log(data);
 		$("#precio_armazon").val(data.precio_venta);
 
-	})
-	agregarDetalle();
+	})*/
+	
 }
 function mostrarArticulo(){
 	var id_armazon = document.getElementById("id_armazon").value;
@@ -256,16 +290,16 @@ function marcarImpuesto()
     }
   }
 
-function agregarDetalle()
+function agregarDetalle(precio_venta)
   {
   	var cantidad=1;
     var descuento=0;
 	var valor_cristal = document.getElementById("precio_cristal").value;
-	var valor_armazon = document.getElementById("precio_armazon").value;
+	var valor_armazon = precio_venta;
 	//console.log(valor_cristal);
 	//console.log(precio_armazon);
-	var valor_lente = valor_armazon + valor_cristal;
-
+	var valor_lente = parseInt(valor_armazon) + parseInt(valor_cristal);
+	console.log(precio_venta);
     	var subtotal=cantidad*(valor_lente);
     	var fila='<tr class="filas" id="fila'+cont+'">'+
     	'<td><button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button></td>'+
@@ -275,8 +309,8 @@ function agregarDetalle()
     	'<td><span name="subtotal" id="subtotal'+cont+'">'+subtotal+'</span></td>'+
     	'<td><button type="button" onclick="modificarSubototales()" class="btn btn-info"><i class="fa fa-refresh"></i></button></td>'+
     	'</tr>';
-    	//cont++;
-    	//detalles=detalles+1;
+    	cont++;
+    	detalles=detalles+1;
     	$('#detalles').append(fila);
     	modificarSubototales();
 

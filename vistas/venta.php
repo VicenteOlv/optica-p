@@ -29,7 +29,7 @@ require 'header.php';
             <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-12">
               <label>Cliente:</label>
               <input type="hidden" name="id_venta" id="id_venta">
-              <input type="hidden" name="precio_armazon" id="precio_armazon">
+              <input type="hidden" name="precio_venta" id="precio_venta">
               <select class="form-control" name="rfc" id="rfc">
                 <option value="">Seleccione un CURP</option>
               </select>

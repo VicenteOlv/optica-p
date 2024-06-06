@@ -9,11 +9,12 @@ $rfc=isset($_POST["rfc"])? limpiarCadena($_POST["rfc"]):"";
 $id_usuario="";//$_SESSION["id_usuario"];
 $total=isset($_POST["total"])? limpiarCadena($_POST["total"]):"";
 $fecha=isset($_POST["fecha"])? limpiarCadena($_POST["fecha"]):"";
+$id_armazon=isset($_POST["id_armazon"])? limpiarCadena($_POST["id_armazon"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':
 		if (empty($idventa)){
-			$rspta=$venta->insertar($rfc,$id_usuario,$total,$fecha,$_POST["idarticulo"],$_POST["cantidad"],$_POST["precio_venta"],$_POST["descuento"],$_POST["id_armazon"],$_POST["id_historia"],$_POST["precio_cristal"],$_POST["material"],$_POST["recubrimiento"]);
+			$rspta=$venta->insertar($rfc,$id_usuario,$total,$fecha,$_POST["idarticulo"],$_POST["cantidad"],$_POST["precio_venta"],$_POST["descuento"],$id_armazon,$_POST["id_historia"],$_POST["precio_cristal"],$_POST["material"],$_POST["recubrimiento"]);
 			echo $rspta ? "Venta registrada" : "No se pudieron registrar todos los datos de la venta";
 		}
 		else {
