@@ -11,17 +11,23 @@ Class Armazon
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($modelo,$precio_compra,$precio_venta,$stock)
+	public function insertar($modelo, $precio_compra, $precio_venta, $stock, $editado_por)
 	{
-		$sql="INSERT INTO armazon (modelo, precio_compra, precio_venta, stock)
-		VALUES ('$modelo','$precio_compra','$precio_venta','$stock')";
+		$sql = "INSERT INTO armazon (modelo, precio_compra, precio_venta, stock, editado_por, fecha_actualizado)
+				VALUES ('$modelo', '$precio_compra', '$precio_venta', '$stock', '$editado_por', CURRENT_TIMESTAMP)";
 		return ejecutarConsulta($sql);
 	}
-
-	//Implementamos un método para editar registros
-	public function editar($id_armazon,$modelo,$precio_compra,$precio_venta,$stock)
-	{
-		$sql="UPDATE armazon SET modelo='$modelo', precio_compra='$precio_compra', precio_venta='$precio_venta', stock='$stock' WHERE id_armazon='$id_armazon'";
+	
+	public function editar($id_armazon, $modelo, $precio_compra, $precio_venta, $stock, $editado_por)
+	{ 
+		$sql = "UPDATE armazon SET 
+				modelo='$modelo', 
+				precio_compra='$precio_compra', 
+				precio_venta='$precio_venta', 
+				stock='$stock', 
+				editado_por='$editado_por', 
+				fecha_actualizado=CURRENT_TIMESTAMP 
+				WHERE id_armazon='$id_armazon'";
 		return ejecutarConsulta($sql);
 	}
 
@@ -53,8 +59,12 @@ Class Armazon
 	//Implementar un método para listar los registros
 	public function listar()
 	{
-		$sql="SELECT * FROM armazon";
-		return ejecutarConsulta($sql);		
+		/*$sql="SELECT * FROM armazon";
+		return ejecutarConsulta($sql);	*/
+		$sql = "SELECT armazon.*, usuarios.nombre as editado_por 
+        FROM armazon 
+        LEFT JOIN usuarios ON armazon.editado_por = usuarios.idusuario";
+		return ejecutarConsulta($sql);	
 	}
 }
 

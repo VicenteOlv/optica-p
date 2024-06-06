@@ -120,11 +120,11 @@ function mostrar(id_armazon)
 		data = JSON.parse(data);		
 		mostrarform(0);
 
-		$("#id_armazon").val(data.id_armazon);
-		$("#modelo").val(data.modelo);
-		$("#precio_compra").val(data.precio_compra);
-		$("#precio_venta").val(data.precio_venta);
-		$("#stock").val(data.stock);
+		$("#id_armazon").val("");
+		$("#modelo").val("");
+		$("#precio_compra").val("");
+		$("#precio_venta").val("");
+		$("#stock").val("");
 
  	})
 }
@@ -135,11 +135,11 @@ function mostrar2(id_armazon)
 		data = JSON.parse(data);		
 		mostrarform(2);
 
-		$("#id_armazon").val(data.id_armazon);
-		$("#modelo").val(data.modelo);
-		$("#precio_compra").val(data.precio_compra);
-		$("#precio_venta").val(data.precio_venta);
-		$("#stock").val(data.stock);
+		$("#id_armazon").val("");
+		$("#modelo").val("");
+		$("#precio_compra").val("");
+		$("#precio_venta").val("");
+		$("#stock").val("");
 
  	})
 }

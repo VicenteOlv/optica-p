@@ -36,14 +36,15 @@ if ($_SESSION['armazones']==1)
                             <th>Precio de compra</th>
                             <th>Precio de venta</th>
                             <th>Stock</th>
+                            <th>Última edición</th>
                           </thead>
                         </table>
                     </div>
                     <div class="panel-body" style="height: 400px;" id="formularioregistros">
                         <form name="formulario" id="formulario" method="POST">
                         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" id="formid">
-                            <!--<label>iD:</label>-->
-                            <input type="hidden" class="form-control" name="id_armazon" id="id_armazon" maxlength="256" placeholder="Id">
+                            <label>iD:</label>
+                            <input type="text" class="form-control" name="id_armazon" id="id_armazon" maxlength="256" placeholder="Id">
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Modelo:</label>
@@ -51,15 +52,15 @@ if ($_SESSION['armazones']==1)
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Precio de compra:</label>
-                            <input type="number" class="form-control" name="precio_compra" id="precio_compra" maxlength="256" placeholder="Precio de compra">
+                            <input type="number" class="form-control" name="precio_compra" id="precio_compra" maxlength="256" placeholder="Precio">
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Precio de venta:</label>
-                            <input type="number" class="form-control" name="precio_venta" id="precio_venta" maxlength="256" placeholder="Precio de venta">
+                            <input type="number" class="form-control" name="precio_venta" id="precio_venta" maxlength="256" placeholder="Precio">
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Cantidad:</label>
-                            <input type="number" class="form-control" name="stock" id="stock" maxlength="256" placeholder="Cantidad">
+                            <label>Stock:</label>
+                            <input type="number" class="form-control" name="stock" id="stock" maxlength="256" placeholder="Stock">
                           </div>
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
