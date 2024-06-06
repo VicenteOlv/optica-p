@@ -5,17 +5,19 @@ $armazon=new Armazon();
 
 
 $modelo=isset($_POST["modelo"])? limpiarCadena($_POST["modelo"]):"";
-$precio=isset($_POST["precio"])? limpiarCadena($_POST["precio"]):"";
+$precio_compra=isset($_POST["precio_compra"])? limpiarCadena($_POST["precio_compra"]):"";
+$precio_venta=isset($_POST["precio_venta"])? limpiarCadena($_POST["precio_venta"]):"";
+$stock=isset($_POST["stock"])? limpiarCadena($_POST["stock"]):"";
 $id_armazon=isset($_POST["id_armazon"])? limpiarCadena($_POST["id_armazon"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':
 		if (empty($id_armazon)){
-			$rspta=$armazon->insertar($modelo,$precio);
+			$rspta=$armazon->insertar($modelo,$precio_compra,$precio_venta,$stock);
 			echo $rspta ? "Armazón registrado" : "Armazón no se pudo registrar";
 		}
 		else {
-			$rspta=$armazon->editar($id_armazon,$modelo,$precio);
+			$rspta=$armazon->editar($id_armazon,$modelo,$precio_compra,$precio_venta,$stock);
 			echo $rspta ? "Armazón actualizado" : "Armazón no se pudo actualizar";
 		}
 	break;
@@ -42,7 +44,9 @@ switch ($_GET["op"]){
 					"<button class='btn btn-danger' onclick=eliminar('$reg->id_armazon')><i class='fa fa-close'></i></button>",
 				"1"=>$reg->id_armazon,
 				"2"=>$reg->modelo,
-                "3"=>$reg->precio
+                "3"=>$reg->precio_compra,
+				"4"=>$reg->precio_venta,
+				"5"=>$reg->stock
                 //"8"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
  				//'<span class="label bg-red">Desactivado</span>'
  				);
