@@ -1,4 +1,5 @@
 var tabla;
+var precio_armazon
 
 //Función que se ejecuta al inicio
 function init(){
@@ -11,8 +12,16 @@ function init(){
 	});
 	//Cargamos los items al select cliente
 	$.post("../ajax/venta.php?op=selectCliente", function(r){
-	            $("#idcliente").html(r);
-	            $('#idcliente').selectpicker('refresh');
+	            $("#rfc").html(r);
+	            $('#rfc').selectpicker('refresh');
+	});
+	$.post("../ajax/venta.php?op=selectArmazon", function(r){
+		$("#id_armazon").html(r);
+		$('#id_armazon').selectpicker('refresh');
+	});
+	$.post("../ajax/venta.php?op=selectHistorial", function(r){
+		$("#id_historia").html(r);
+		$('#id_historia').selectpicker('refresh');
 	});
 	$('#mVentas').addClass("treeview active");
     $('#lVentas').addClass("active");
@@ -67,7 +76,23 @@ function mostrarform(flag)
 		$("#btnagregar").show();
 	}
 }
+function mostrarprecio(id_armazon)
+{
+	$.post("../ajax/venta.php?op=precio_venta",{id_armazon : id_armazon}, function(data, status)
+	{
+		console.log(data);
+		data = JSON.parse(data);		
+		console.log(data);
+		$("#precio_armazon").val(data.precio_venta);
 
+	})
+	agregarDetalle();
+}
+function mostrarArticulo(){
+	var id_armazon = document.getElementById("id_armazon").value;
+	console.log(id_armazon);
+	mostrarprecio(id_armazon);
+}
 //Función cancelarform
 function cancelarform()
 {
@@ -231,32 +256,30 @@ function marcarImpuesto()
     }
   }
 
-function agregarDetalle(idarticulo,articulo,precio_venta)
+function agregarDetalle()
   {
   	var cantidad=1;
     var descuento=0;
+	var valor_cristal = document.getElementById("precio_cristal").value;
+	var valor_armazon = document.getElementById("precio_armazon").value;
+	//console.log(valor_cristal);
+	//console.log(precio_armazon);
+	var valor_lente = valor_armazon + valor_cristal;
 
-    if (idarticulo!="")
-    {
-    	var subtotal=cantidad*precio_venta;
+    	var subtotal=cantidad*(valor_lente);
     	var fila='<tr class="filas" id="fila'+cont+'">'+
     	'<td><button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button></td>'+
-    	'<td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>'+
     	'<td><input type="number" name="cantidad[]" id="cantidad[]" value="'+cantidad+'"></td>'+
-    	'<td><input type="number" name="precio_venta[]" id="precio_venta[]" value="'+precio_venta+'"></td>'+
+    	'<td><input type="number" name="precio_venta[]" id="precio_venta[]" value="'+valor_lente+'"></td>'+
     	'<td><input type="number" name="descuento[]" value="'+descuento+'"></td>'+
     	'<td><span name="subtotal" id="subtotal'+cont+'">'+subtotal+'</span></td>'+
     	'<td><button type="button" onclick="modificarSubototales()" class="btn btn-info"><i class="fa fa-refresh"></i></button></td>'+
     	'</tr>';
-    	cont++;
-    	detalles=detalles+1;
+    	//cont++;
+    	//detalles=detalles+1;
     	$('#detalles').append(fila);
     	modificarSubototales();
-    }
-    else
-    {
-    	alert("Error al ingresar el detalle, revisar los datos del artículo");
-    }
+
   }
 
   function modificarSubototales()

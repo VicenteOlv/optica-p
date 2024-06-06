@@ -29,6 +29,7 @@ require 'header.php';
             <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-12">
               <label>Cliente:</label>
               <input type="hidden" name="id_venta" id="id_venta">
+              <input type="hidden" name="precio_armazon" id="precio_armazon">
               <select class="form-control" name="rfc" id="rfc">
                 <option value="">Seleccione un CURP</option>
               </select>
@@ -51,26 +52,45 @@ require 'header.php';
             </div>
             <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
               <label>Precio del lente:</label>
-              <input type="text" class="form-control" name="precio_cristal" id="precio_cristal" maxlength="50" placeholder="Curp" required> <!--Cambiar columna en la base de datos-->
+              <input type="number" class="form-control" name="precio_cristal" id="precio_cristal" maxlength="50" placeholder="Precio" required> <!--Cambiar columna en la base de datos-->
+            </div>
+            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <label>Material:</label>
+              <select class="form-control" id="material" name="material" required>
+                  <option value="">Selecciona el material</option>
+                  <option value="cristal">Cristal (vidrio)</option>
+                  <option value="policarbonato">Policarbonato</option>
+                  <option value="trivex">Trivex</option>
+                  <option value="cr39">CR-39</option>
+              </select>
+            </div>
+            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <label>Recubrimiento:</label>
+              <select class="form-control" id="recubrimiento" name="recubrimiento" required>
+                  <option value="">Selecciona el recubrimiento</option>
+                  <option value="antirreflejo">Antirreflejo</option>
+                  <option value="antirayaduras">Antirayaduras</option>
+                  <option value="filtro_uv">Filtro UV</option>
+                  <option value="fotocromatico">Fotocromático</option>
+                  <option value="polarizado">Polarizado</option>
+              </select><!--Cambiar columna en la base de datos-->
             </div>
 
             <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <button id="btnAgregarArt" type="button" class="btn btn-primary"> <span class="fa fa-plus"></span> Agregar Artículos</button>
+                <button id="btnAgregarArt" type="button" class="btn btn-primary" onclick="mostrarArticulo()"> <span class="fa fa-plus"></span> Agregar Artículos</button>
             </div>
 
             <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 table-responsive">
               <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
                 <thead style="background-color:#A9D0F5">
                   <th>Opciones</th>
-                  <th>Armazon</th>
-                  <th>Lente</th>
+                  <th>Cantidad</th>
                   <th>Precio Venta</th>
                   <th>Descuento</th>
                   <th>Subtotal</th>
                 </thead>
                 <tfoot>
                   <th>TOTAL</th>
-                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>

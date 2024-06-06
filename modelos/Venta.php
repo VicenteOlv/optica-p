@@ -11,12 +11,27 @@ Class Venta
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($rfc,$id_usuario,$total,$fecha,$codigo_barras,$cantidad,$precio_venta,$descuento)
+	public function insertar($rfc,$id_usuario,$total,$fecha,$codigo_barras,$cantidad,$precio_venta,$descuento,$id_armazon,$id_historia,$precio_cristal,$material,$recubrimiento)
 	{
+		$id_cristales_new="";
 		$sql="INSERT INTO venta (total,rfc,id_usuario,fecha)
-		VALUES ('$total','$rfc','$id_usuario','$fecha)";
+		VALUES ('$total','$rfc','$id_usuario','$fecha')";
 		//return ejecutarConsulta($sql);
 		$idventanew=ejecutarConsulta_retornarID($sql);
+
+		if(!empty($id_historia)){
+			//Aqui hay que crear el cristal, sacando los dos daignosticos de ojos, y por último creamos los dettalles
+			$sql = "SELECT id_ojo_der FROM ojo_der WHERE id_hitoria='$id_historia'";
+			$idOjoDer = ejecutarConsultaSimpleFila($sql)['id_ojo_der'];
+			$sql = "SELECT id_ojo_izq FROM ojo_izq WHERE id_hitoria='$id_historia'";
+			$idOjoIzq = ejecutarConsultaSimpleFila($sql)['id_ojo_izq'];
+
+			$sql_cristal = "INSERT INTO cristales (id_ojo_izq, id_ojo_der, precio_cristal, material, recubrimiento) VALUES ('$idOjoIzq','$idOjoDer','$precio_cristal','$material','$recubrimiento')";
+			$id_cristales_new=ejecutarConsulta_retornarID($sql_cristal);
+		}
+		$sql_precioarmazon = "SELECT precio_venta";
+		//Falta crear el lente
+		$sql_lentes = "INSERT INTO lentes (id_cristales, id_armazon, precio_lentes) VALUES ('$id_cristales_new','$id_armazon','$precio_cristal+$')";
 
 		$sql_detalle = "INSERT INTO detalle_venta(codigo_barras,id_venta,cantidad,precio_venta,descuento) VALUES ('$codigo_barras','$idventanew','$cantidad','$precio_venta','$descuento')";
 		ejecutarConsulta($sql_detalle) or $sw = false;
@@ -34,7 +49,18 @@ Class Venta
 		return $sw;
 	}
 
-	
+	public function listarN()
+	{
+		$sql = "SELECT c.rfc, p.curp, p.nombre 
+				FROM ficales c 
+				JOIN clientes p ON c.curp = p.curp";
+		return ejecutarConsulta($sql);
+	}
+	public function precioArmazon($id_armazon){
+			$sql = "SELECT precio_venta FROM armazon WHERE id_armazon = '$id_armazon' LiMIT 1";        
+			return ejecutarConsultaSimpleFila($sql);
+		}
+	/*
 	//Implementamos un método para anular la venta
 	public function anular($idventa)
 	{
@@ -72,6 +98,6 @@ Class Venta
 		$sql="SELECT a.nombre as articulo,a.codigo,d.cantidad,d.precio_venta,d.descuento,(d.cantidad*d.precio_venta-d.descuento) as subtotal FROM detalle_venta d INNER JOIN articulo a ON d.idarticulo=a.idarticulo WHERE d.idventa='$idventa'";
 		return ejecutarConsulta($sql);
 	}
-	
+	*/
 }
 ?>
