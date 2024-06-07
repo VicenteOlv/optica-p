@@ -64,7 +64,7 @@ switch ($_GET["op"]){
 		require_once "../modelos/Historial.php";
 		$historial = new Historial();
 	
-		$rspta = $historial->listar();
+		$rspta = $historial->listarCurp($rfc);
 		echo '<option value="">Sin historial</option>';
 		while ($reg = $rspta->fetch_object())
 		{

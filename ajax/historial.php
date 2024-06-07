@@ -58,8 +58,12 @@ switch ($_GET["op"]) {
         }
         break;
     case 'eliminar':
+        try{
         $rspta = $historial->eliminar($id_historia);
         echo $rspta ? "Historial eliminado" : "Categoría no se puede desactivar";
+        } catch (mysqli_sql_exception $e) {
+            echo "No se puede eliminar el cliente debido a que tiene registros asociados en otras tablas. Por favor, elimine primero los registros asociados antes de eliminar este cliente.";
+        }
         break;
 
     case 'mostrar':
@@ -85,7 +89,8 @@ switch ($_GET["op"]) {
             $formatted_date = date("d-m-Y H:i:s", strtotime($reg->fecha_actualizado));
             $data[] = array(
                 "0" => "<button class='btn btn-warning' onclick=mostrar('$reg->id_historia','$var1','$var2')><i class='fa fa-pencil'></i></button>	" .
-                    "<button class='btn btn-danger' onclick=eliminar('$reg->id_historia')><i class='fa fa-close'></i></button>",
+                    "<button class='btn btn-danger' onclick=eliminar('$reg->id_historia')><i class='fa fa-close'></i></button>   ".
+                    "<button class='btn btn-info' onclick=receta('$reg->id_historia')><i class='fa fa-print'></i></button>",
                 "1" => $reg->id_historia,
                 "2" => $reg->fecha,
                 "3" => $reg->curp,

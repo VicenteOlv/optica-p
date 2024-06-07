@@ -58,6 +58,26 @@ Class Historial
         LEFT JOIN usuarios ON historia_clinicas.editado_por = usuarios.idusuario";
 		return ejecutarConsulta($sql);		
 	}
+	public function listarCurp($rfc)
+	{
+		$sql_curp = "SELECT c.curp as curp
+					FROM clientes c
+					JOIN fiscales ON c.curp = fiscales.curp
+					WHERE fiscales.rfc = '$rfc' LIMIT 1";
+		$curp_result = ejecutarConsultaSimpleFila($sql_curp);
+		echo $rfc;
+		var_dump($curp_result);
+		// Suponiendo que $curp_result contiene el array que muestras
+		$curp = $curp_result['curp'];
+
+		// Ahora puedes hacer lo que quieras con el valor de la CURP
+		echo "La CURP del cliente es: " . $curp;
+
+		$sql = "SELECT id_historia, fecha
+        		FROM historia_clinicas 
+        		WHERE curp = '$curp'";
+		return ejecutarConsulta($sql);		
+	}
     public function obtenerCurps(){
         $sql = "SELECT curp FROM clientes";
         return ejecutarConsulta($sql);

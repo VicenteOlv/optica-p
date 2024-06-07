@@ -15,6 +15,9 @@ function init(){
 }
 
 
+function receta(id_historia){
+	window.location.href = 'resumen.php?id_historia=' + encodeURIComponent(id_historia);
+}
 
 //Función limpiar
 function limpiar()

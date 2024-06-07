@@ -40,8 +40,12 @@ switch ($_GET["op"]) {
 		break;
 
 	case 'eliminar':
-		$rspta = $cliente->eliminar($curp);
-		echo $rspta ? "Cliente eliminado" : "Categoría no se puede desactivar";
+		try {
+			$rspta = $cliente->eliminar($curp);
+			echo $rspta ? "Cliente eliminado" : "Categoría no se puede desactivar";
+		} catch (mysqli_sql_exception $e) {
+			echo "No se puede eliminar el cliente debido a que tiene registros asociados en otras tablas. Por favor, elimine primero los registros asociados antes de eliminar este cliente.";
+		}
 		break;
 
 	case 'desactivar':

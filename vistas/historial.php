@@ -22,9 +22,6 @@ if ($_SESSION['historiales']==1)
                 <div class="box">
                     <div class="box-header with-border">
                         <h1 class="box-title">Historial médico<button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button>
-                        <a href="resumen.php" target="_blank"><button class="btn btn-info"><i class="fa fa-clipboard"></i> Cita medica</button></a></h1></h1>
-                        <div class="box-tools pull-right">
-                        </div>
                     </div>
                     <!-- /.box-header -->
                     <!-- centro -->

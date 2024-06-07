@@ -55,7 +55,7 @@ if ($_SESSION['ventas']==1)
             </div>
             <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <label>Armazon:</label>
-              <select class="form-control" name="id_armazon" id="id_armazon">
+              <select class="form-control" value=" " name="id_armazon" id="id_armazon">
                 <option value="">Seleccione un armazon</option><!--Añadir este valor a las otras vista para valor por defecto-->
               </select>
             </div>
