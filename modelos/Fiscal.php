@@ -17,6 +17,13 @@ Class Fiscal
 		VALUES ('$rfc','$regimen','$curp')";
 		return ejecutarConsulta($sql);
 	}
+	public function listarN()
+	{
+		$sql = "SELECT c.rfc, p.curp, p.nombre_completo 
+				FROM fiscales c 
+				JOIN clientes p ON c.curp = p.curp";
+		return ejecutarConsulta($sql);
+	}
 
 	//Implementamos un método para editar registros
 	public function editar($rfc,$regimen,$curp)

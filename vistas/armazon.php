@@ -1,5 +1,16 @@
 <?php
+ob_start();
+session_start();
+
+if (!isset($_SESSION["nombre"]))
+{
+  header("Location: login.html");
+}
+else
+{
 require 'header.php';
+if ($_SESSION['armazones']==1)
+{
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -26,27 +37,39 @@ require 'header.php';
                             <th>Opcion</th>
                             <th>Id</th>
                             <th>Modelo</th>
-                            <th>Precio</th>
+                            <th>Precio de compra</th>
+                            <th>Precio de venta</th>
+                            <th>Stock</th>
                           </thead>
                         </table>
                     </div>
                     <div class="panel-body" style="height: 400px;" id="formularioregistros">
                         <form name="formulario" id="formulario" method="POST">
                         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" id="formid">
-                            <label>iD:</label>
-                            <input type="text" class="form-control" name="id_armazon" id="id_armazon" maxlength="256" placeholder="Id">
+                            <!--<label>iD:</label>-->
+                            <input type="hidden" class="form-control" name="id_armazon" id="id_armazon" maxlength="256" placeholder="Id">
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Modelo:</label>
                             <input type="text" class="form-control" name="modelo" id="modelo" maxlength="256" placeholder="Modelo">
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Precio:</label>
-                            <input type="number" class="form-control" name="precio" id="precio" maxlength="256" placeholder="Precio">
+                            <label>Precio de compra:</label>
+                            <input type="number" class="form-control" name="precio_compra" id="precio_compra" maxlength="256" placeholder="Precio de compra">
                           </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Precio de venta:</label>
+                            <input type="number" class="form-control" name="precio_venta" id="precio_venta" maxlength="256" placeholder="Precio de venta">
+                          </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Cantidad:</label>
+                            <input type="number" class="form-control" name="stock" id="stock" maxlength="256" placeholder="Cantidad">
+                          </div>
+
 
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="display: flex; justify-content: center;">
                           <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+
 
                             <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
                           </div>
@@ -61,6 +84,15 @@ require 'header.php';
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
 <?php
+}
+else
+{
+  require 'noacceso.php';
+}
 require 'footer.php';
 ?>
 <script type="text/javascript" src="scripts/armazon.js"></script>
+<?php 
+}
+ob_end_flush();
+?>

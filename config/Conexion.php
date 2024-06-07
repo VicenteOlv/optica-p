@@ -42,5 +42,17 @@ if (!function_exists('ejecutarConsulta'))
 		$str = mysqli_real_escape_string($conexion,trim($str));
 		return htmlspecialchars($str);
 	}
+
+	function ejecutarConsulta_retornarValor($sql){
+		global $conexion;
+		$query = $conexion->query($sql);
+
+		if ($query && $query->num_rows > 0) {
+			$row = $query->fetch_assoc();
+			return $row['id_ojo_der']; // Suponiendo que siempre queremos el valor de 'id_ojo_der'
+		} else {
+			return null; // O puedes retornar algún valor por defecto o manejar el error
+		}
+	}
 }
 ?>
