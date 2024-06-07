@@ -1,8 +1,8 @@
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
+        <b>Version</b> 2.5.0
         </div>
-        <strong>Copyright &copy; 2013-2017 <a href="www.incanatoit.com">IncanatoIT</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2014. MVPDA Software</a>.</strong> All rights reserved.
     </footer>    
     <!-- jQuery -->
     <script src="../public/js/jquery-3.1.1.min.js"></script>

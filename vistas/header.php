@@ -66,8 +66,7 @@ if (strlen(session_id()) < 1)
                   <li class="user-header">
                     <img src="../files/usuarios/<?php echo $_SESSION['imagen']; ?>" class="img-circle" alt="User Image">
                     <p>
-                      Loren ipsum
-                      <small>www.</small>
+                      Cuida tu vista
                     </p>
                   </li>
                   
