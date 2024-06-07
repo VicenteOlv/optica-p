@@ -12,7 +12,7 @@ require 'header.php';
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box">
+                    <div class="box" style="text-align: center;">
                         <div class="box-header with-border">
                                             <header style="background-color: #FF6C00; color: white; padding: 20px; font-family: Arial, sans-serif; text-align: center; margin: 0;">
                             <h1>Bienvenidos</h1>
@@ -46,6 +46,7 @@ require 'header.php';
 
     
                     </div>
+                    <img src="../public/dist/img/imagenLentes.png" alt="" width="auto">
                 </div>
             </div>
         </section>
