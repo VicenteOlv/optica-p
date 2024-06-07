@@ -16,6 +16,7 @@ if (strlen(session_id()) < 1)
     <link rel="stylesheet" href="../public/css/font-awesome.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../public/css/AdminLTE.min.css">
+    
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../public/css/_all-skins.min.css">
@@ -40,7 +41,7 @@ if (strlen(session_id()) < 1)
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>MV</b>PDA</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>MVPDA</b></span>
+          <span class="logo-lg"><b style="font-family: 'Times New Roman', Times, serif;">MVPDA</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -108,7 +109,7 @@ if (strlen(session_id()) < 1)
             {
               echo '<li id="mArmazones">
               <a href="armazon.php">
-                <i class="fa fa-tasks"></i> <span>Armazones</span>
+                <i class="fa fa-glasses"></i> <span>Armazones</span>
               </a>
             </li>';
             }
@@ -119,7 +120,7 @@ if (strlen(session_id()) < 1)
             {
               echo '<li id="mHistoriales">
               <a href="historial.php">
-                <i class="fa fa-tasks"></i> <span>Historiales</span>
+                <i class="fa-solid fa-file-medical"></i> <span>Historiales</span>
               </a>
             </li>';
             }

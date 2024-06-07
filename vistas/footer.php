@@ -19,7 +19,7 @@
     <script src="../public/datatables/jszip.min.js"></script>
     <script src="../public/datatables/pdfmake.min.js"></script>
     <script src="../public/datatables/vfs_fonts.js"></script> 
-
+    <script src="https://kit.fontawesome.com/261c60b3eb.js" crossorigin="anonymous"></script>
     <script src="../public/js/bootbox.min.js"></script> 
     <script src="../public/js/bootstrap-select.min.js"></script>  
   </body>

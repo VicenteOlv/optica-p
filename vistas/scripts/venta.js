@@ -173,10 +173,7 @@ function listar()
 			"aServerSide": true,//Paginación y filtrado realizados por el servidor
 			dom: 'Bfrtip',//Definimos los elementos del control de tabla
 			buttons: [		          
-						'copyHtml5',
-						'excelHtml5',
-						'csvHtml5',
-						'pdf'
+						
 					],
 			"ajax":
 					{
@@ -413,7 +410,7 @@ function agregarDetalle(precio_venta)
   	for (var i = 0; i <sub.length; i++) {
 		total += document.getElementsByName("subtotal")[i].value;
 	}
-	$("#total").html("S/. " + total);
+	$("#total").html("$ " + total);
     $("#total_venta").val(total);
     evaluar();
   }
