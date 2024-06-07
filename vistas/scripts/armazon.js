@@ -18,7 +18,9 @@ function limpiar()
 {
 	$("#id_armazon").val("");
 	$("#modelo").val("");
-	$("#precio").val("");
+	$("#precio_compra").val("");
+	$("#precio_venta").val("");
+	$("#stock").val("");
 }
 
 //Función mostrar formulario
@@ -120,7 +122,9 @@ function mostrar(id_armazon)
 
 		$("#id_armazon").val(data.id_armazon);
 		$("#modelo").val(data.modelo);
-		$("#precio").val(data.precio);
+		$("#precio_compra").val(data.precio_compra);
+		$("#precio_venta").val(data.precio_venta);
+		$("#stock").val(data.stock);
 
  	})
 }
@@ -133,7 +137,9 @@ function mostrar2(id_armazon)
 
 		$("#id_armazon").val(data.id_armazon);
 		$("#modelo").val(data.modelo);
-		$("#precio").val(data.precio);
+		$("#precio_compra").val(data.precio_compra);
+		$("#precio_venta").val(data.precio_venta);
+		$("#stock").val(data.stock);
 
  	})
 }

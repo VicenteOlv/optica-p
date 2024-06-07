@@ -11,17 +11,17 @@ Class Armazon
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($modelo,$precio)
+	public function insertar($modelo,$precio_compra,$precio_venta,$stock)
 	{
-		$sql="INSERT INTO armazon (modelo, precio)
-		VALUES ('$modelo','$precio')";
+		$sql="INSERT INTO armazon (modelo, precio_compra, precio_venta, stock)
+		VALUES ('$modelo','$precio_compra','$precio_venta','$stock')";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($id_armazon,$modelo,$precio)
+	public function editar($id_armazon,$modelo,$precio_compra,$precio_venta,$stock)
 	{
-		$sql="UPDATE armazon SET modelo='$modelo', precio='$precio' WHERE id_armazon='$id_armazon'";
+		$sql="UPDATE armazon SET modelo='$modelo', precio_compra='$precio_compra', precio_venta='$precio_venta', stock='$stock' WHERE id_armazon='$id_armazon'";
 		return ejecutarConsulta($sql);
 	}
 
