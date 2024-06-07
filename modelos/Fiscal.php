@@ -17,7 +17,15 @@ Class Fiscal
 		VALUES ('$rfc','$regimen','$curp', '$editado_por', CURRENT_TIMESTAMP)";
 		return ejecutarConsulta($sql);
 	}
-
+	public function listarN()
+	{
+		$sql = "SELECT c.rfc, p.curp, p.nombre_completo 
+				FROM fiscales c 
+				JOIN clientes p ON c.curp = p.curp";
+		
+		return ejecutarConsulta($sql);
+	}
+		
 	//Implementamos un método para editar registros
 	public function editar($rfc,$regimen,$curp, $editado_por)
 	{
@@ -25,7 +33,7 @@ Class Fiscal
 				fecha_actualizado=CURRENT_TIMESTAMP WHERE rfc='$rfc'";
 		return ejecutarConsulta($sql);
 	}
-
+	
 	//Implementamos un método para desactivar categorías
 	public function desactivar($curp)
 	{
