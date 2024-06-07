@@ -24,10 +24,7 @@ function init(){
 		$("#id_armazon").html(r);
 		$('#id_armazon').selectpicker('refresh');
 	});
-	$.post("../ajax/venta.php?op=selectHistorial", function(r){
-		$("#id_historia").html(r);
-		$('#id_historia').selectpicker('refresh');
-	});
+	
 	$('#mVentas').addClass("treeview active");
     $('#lVentas').addClass("active");
 }
@@ -57,6 +54,22 @@ function limpiar()
     $("#id_historia").val("");
 	$("#id_historia").selectpicker('refresh');
 }
+$(document).ready(function(){
+    // Escuchar el evento change del select "rfc"
+    $("#rfc").change(function(){
+        // Obtener el valor seleccionado del select "rfc"
+        var rfcList = $(this).val();
+        console.log(rfcList);
+        // Realizar la petición AJAX para obtener los historiales del cliente seleccionado
+        $.post("../ajax/venta.php?op=selectHistorial", { rfc: rfcList }, function(r){
+            // Actualizar el contenido del select "id_historia" con la respuesta del servidor
+            $("#id_historia").html(r);
+			//bootbox.alert(r);
+            // Actualizar el plugin SelectPicker
+            $('#id_historia').selectpicker('refresh');
+        });
+    });
+});
 
 //Función mostrar formulario
 function mostrarform(flag)
@@ -74,6 +87,13 @@ function mostrarform(flag)
 		$("#btnCancelar").show();
 		$("#btnAgregarArt").show();
 		detalles=0;
+		var rfcList = document.getElementById("rfc").options[document.getElementById("rfc").selectedIndex].value;
+		console.log(rfcList);
+		$.post("../ajax/venta.php?op=selectHistorial",{ rfc : rfcList }, function(r){
+			//bootbox.alert(r);
+			$("#id_historia").html(r);
+			$('#id_historia').selectpicker('refresh');
+		});
 	}
 	else
 	{
@@ -81,6 +101,8 @@ function mostrarform(flag)
 		$("#formularioregistros").hide();
 		$("#btnagregar").show();
 	}
+
+	
 }
 function mostrarprecio(id_armazon)
 {
@@ -151,10 +173,7 @@ function listar()
 			"aServerSide": true,//Paginación y filtrado realizados por el servidor
 			dom: 'Bfrtip',//Definimos los elementos del control de tabla
 			buttons: [		          
-						'copyHtml5',
-						'excelHtml5',
-						'csvHtml5',
-						'pdf'
+						
 					],
 			"ajax":
 					{
@@ -391,7 +410,7 @@ function agregarDetalle(precio_venta)
   	for (var i = 0; i <sub.length; i++) {
 		total += document.getElementsByName("subtotal")[i].value;
 	}
-	$("#total").html("S/. " + total);
+	$("#total").html("$ " + total);
     $("#total_venta").val(total);
     evaluar();
   }

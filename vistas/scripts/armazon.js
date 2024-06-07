@@ -68,10 +68,7 @@ function listar()
 	    "aServerSide": true,//Paginación y filtrado realizados por el servidor
 	    dom: 'Bfrtip',//Definimos los elementos del control de tabla
 	    buttons: [		          
-		            'copyHtml5',
-		            'excelHtml5',
-		            'csvHtml5',
-		            'pdf'
+		            
 		        ],
 		"ajax":
 				{
@@ -125,6 +122,7 @@ function mostrar(id_armazon)
 		$("#precio_compra").val(data.precio_compra);
 		$("#precio_venta").val(data.precio_venta);
 		$("#stock").val(data.stock);
+
 
  	})
 }

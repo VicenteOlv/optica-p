@@ -15,7 +15,7 @@ if ($_SESSION['historiales']==1)
 require_once "../modelos/Historial.php";
 require_once "../modelos/Ojo_der.php";
 require_once "../modelos/Ojo_izq.php";
-
+$current_user = $_SESSION['idusuario'];
 $historial = new Historial();
 $ojo_der = new Ojo_der();
 $ojo_izq = new Ojo_izq();
@@ -25,21 +25,22 @@ $id_historia = isset($_POST["id_historia"]) ? limpiarCadena($_POST["id_historia"
 $fecha = isset($_POST["fecha"]) ? limpiarCadena($_POST["fecha"]) : "";
 $curp = isset($_POST["curp"]) ? limpiarCadena($_POST["curp"]) : "";
 $observaciones = isset($_POST["observaciones"]) ? limpiarCadena($_POST["observaciones"]) : "";
-
+$editado_por=isset($_POST["editado_por"])? limpiarCadena($_POST["editado_por"]):"";
+$fecha_actualizado=isset($_POST["fecha_actualizado"])? limpiarCadena($_POST["fecha_actualizado"]):"";
 
 switch ($_GET["op"]) {
     case 'guardaryeditar':
         if(empty($id_historia)){
-            $rspta = $historial->insertar($fecha,$curp,$observaciones);
+            $rspta = $historial->insertar($fecha,$curp,$observaciones,$current_user);
             echo $rspta ? "Historial registrado" : "Historial no se pudo registrar";
 
         }else{
-            $rspta = $historial->editar($id_historia,$fecha,$curp,$observaciones);
+            $rspta = $historial->editar($id_historia,$fecha,$curp,$observaciones,$current_user);
             echo $rspta ? "Historial actualizado" : "Historial no se pudo actualizar";
         }
         break;
     case 'editar':
-        $rspta = $historial->editar($id_historia,$fecha,$curp,$observaciones);
+        $rspta = $historial->editar($id_historia,$fecha,$curp,$observaciones,$current_user);
         echo $rspta ? "Historial actualizado" : "Historial no se pudo actualizar";
         break;
     case 'ultimo':
@@ -57,8 +58,12 @@ switch ($_GET["op"]) {
         }
         break;
     case 'eliminar':
+        try{
         $rspta = $historial->eliminar($id_historia);
         echo $rspta ? "Historial eliminado" : "Categoría no se puede desactivar";
+        } catch (mysqli_sql_exception $e) {
+            echo "No se puede eliminar el cliente debido a que tiene registros asociados en otras tablas. Por favor, elimine primero los registros asociados antes de eliminar este cliente.";
+        }
         break;
 
     case 'mostrar':
@@ -80,13 +85,17 @@ switch ($_GET["op"]) {
 
             $var2 = json_encode($ojo_der->mostrarID($reg->id_historia));
             $var1 = json_encode($ojo_izq->mostrarID($reg->id_historia));
+
+            $formatted_date = date("d-m-Y H:i:s", strtotime($reg->fecha_actualizado));
             $data[] = array(
                 "0" => "<button class='btn btn-warning' onclick=mostrar('$reg->id_historia','$var1','$var2')><i class='fa fa-pencil'></i></button>	" .
-                    "<button class='btn btn-danger' onclick=eliminar('$reg->id_historia')><i class='fa fa-close'></i></button>",
+                    "<button class='btn btn-danger' onclick=eliminar('$reg->id_historia')><i class='fa fa-close'></i></button>   ".
+                    "<button class='btn btn-info' onclick=receta('$reg->id_historia')><i class='fa fa-print'></i></button>",
                 "1" => $reg->id_historia,
                 "2" => $reg->fecha,
                 "3" => $reg->curp,
-                "4" => $reg->observaciones
+                "4" => $reg->observaciones,
+                "5" => $reg->editado_por . ' (' . $formatted_date . ')',
                 //"8"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
                 //'<span class="label bg-red">Desactivado</span>'
             );

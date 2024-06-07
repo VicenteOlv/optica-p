@@ -39,6 +39,7 @@ if ($_SESSION['ventas']==1)
                             <th>RFC</th>
                             <th>Regimen</th>
                             <th>Curp</th>
+                            <th>Última edición</th>
                           </thead>
                         </table>
                     </div>
@@ -50,7 +51,21 @@ if ($_SESSION['ventas']==1)
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Regimen:</label>
-                            <input type="text" class="form-control" name="regimen" id="regimen" maxlength="256" placeholder="Regimen" required>
+                            <select class="form-control" id="regimen" name="regimen" required>
+                              <option value="">Seleccione un regimen</option>
+                              <option value="RIF">Incorporación Fiscal (RIF)</option>
+                              <option value="RGLPM">General de Ley Personas Morales</option>
+                              <option value="RSSEIS">Sueldos y Salarios e Ingresos Asimilados a Salarios</option>
+                              <option value="RA">Arrendamiento</option>
+                              <option value="RAEP">Actividades Empresariales y Profesionales</option>
+                              <option value="RAAGSP">Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras</option>
+                              <option value="REB">Enajenación de Bienes</option>
+                              <option value="RD">Dividendos</option>
+                              <option value="RI">Intereses</option>
+                              <option value="RSCP">Sociedades Cooperativas de Producción</option>
+                              <option value="RIDSA">Ingresos por Dividendos (socios y accionistas)</option>
+                              <option value="RII">Ingresos por Intereses</option>
+                            </select>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <label>Cliente:</label>

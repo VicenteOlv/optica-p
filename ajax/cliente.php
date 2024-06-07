@@ -13,7 +13,7 @@ else
 if ($_SESSION['ventas']==1)
 {
 require_once "../modelos/Cliente.php";
-
+$current_user = $_SESSION['idusuario'];
 $cliente = new Cliente();
 
 
@@ -24,22 +24,28 @@ $celular = isset($_POST["celular"]) ? limpiarCadena($_POST["celular"]) : "";
 $email = isset($_POST["email"]) ? limpiarCadena($_POST["email"]) : "";
 $fecha = isset($_POST["fecha_nacimiento"]) ? limpiarCadena($_POST["fecha_nacimiento"]) : "";
 $direccion = isset($_POST["direccion"]) ? limpiarCadena($_POST["direccion"]) : "";
+$editado_por=isset($_POST["editado_por"])? limpiarCadena($_POST["editado_por"]):"";
+$fecha_actualizado=isset($_POST["fecha_actualizado"])? limpiarCadena($_POST["fecha_actualizado"]):"";
 
 switch ($_GET["op"]) {
 	case 'guardaryeditar':
 
 		if (!($cliente->existe($curp))) {
-			$rspta = $cliente->insertar($curp, $nombre, $telefono, $celular, $email, $fecha, $direccion);
+			$rspta = $cliente->insertar($curp, $nombre, $telefono, $celular, $email, $fecha, $direccion,$current_user);
 			echo $rspta ? "Cliente registrado" : "Cliente no se pudo registrar";
 		} else {
-			$rspta = $cliente->editar($curp, $nombre, $telefono, $celular, $email, $fecha, $direccion);
+			$rspta = $cliente->editar($curp, $nombre, $telefono, $celular, $email, $fecha, $direccion,$current_user);
 			echo $rspta ? "Cliente actualizado" : "Cliente no se pudo actualizar";
 		}
 		break;
 
 	case 'eliminar':
-		$rspta = $cliente->eliminar($curp);
-		echo $rspta ? "Cliente eliminado" : "Categoría no se puede desactivar";
+		try {
+			$rspta = $cliente->eliminar($curp);
+			echo $rspta ? "Cliente eliminado" : "Categoría no se puede desactivar";
+		} catch (mysqli_sql_exception $e) {
+			echo "No se puede eliminar el cliente debido a que tiene registros asociados en otras tablas. Por favor, elimine primero los registros asociados antes de eliminar este cliente.";
+		}
 		break;
 
 	case 'desactivar':
@@ -64,6 +70,7 @@ switch ($_GET["op"]) {
 		$data = array();
 
 		while ($reg = $rspta->fetch_object()) {
+			$formatted_date = date("d-m-Y H:i:s", strtotime($reg->fecha_actualizado));
 			$data[] = array(
 				"0" => "<button class='btn btn-warning' onclick=mostrar('$reg->curp')><i class='fa fa-pencil'></i></button>	" .
 					"<button class='btn btn-danger' onclick=eliminar('$reg->curp')><i class='fa fa-close'></i></button>",
@@ -73,7 +80,8 @@ switch ($_GET["op"]) {
 				"4" => $reg->celular,
 				"5" => $reg->email,
 				"6" => $reg->fecha_nacimiento,
-				"7" => $reg->direccion
+				"7" => $reg->direccion,
+				"8" => $reg->editado_por . ' (' . $formatted_date . ')',
 				//"8"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
 				//'<span class="label bg-red">Desactivado</span>'
 			);

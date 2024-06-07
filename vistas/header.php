@@ -16,6 +16,7 @@ if (strlen(session_id()) < 1)
     <link rel="stylesheet" href="../public/css/font-awesome.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../public/css/AdminLTE.min.css">
+    
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../public/css/_all-skins.min.css">
@@ -36,11 +37,11 @@ if (strlen(session_id()) < 1)
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="escritorio.php" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>MV</b>PDA</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>MVPDA</b></span>
+          <span class="logo-lg"><b style="font-family: 'Times New Roman', Times, serif;">MVPDA</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -65,8 +66,7 @@ if (strlen(session_id()) < 1)
                   <li class="user-header">
                     <img src="../files/usuarios/<?php echo $_SESSION['imagen']; ?>" class="img-circle" alt="User Image">
                     <p>
-                      Loren ipsum
-                      <small>www.</small>
+                      Cuida tu vista
                     </p>
                   </li>
                   
@@ -96,7 +96,7 @@ if (strlen(session_id()) < 1)
             if ($_SESSION['escritorio']==1)
             {
               echo '<li id="mEscritorio">
-              <a href="#">
+              <a href="escritorio.php">
                 <i class="fa fa-tasks"></i> <span>Escritorio</span>
               </a>
             </li>';
@@ -108,7 +108,7 @@ if (strlen(session_id()) < 1)
             {
               echo '<li id="mArmazones">
               <a href="armazon.php">
-                <i class="fa fa-tasks"></i> <span>Armazones</span>
+                <i class="fa fa-glasses"></i> <span>Armazones</span>
               </a>
             </li>';
             }
@@ -119,7 +119,7 @@ if (strlen(session_id()) < 1)
             {
               echo '<li id="mHistoriales">
               <a href="historial.php">
-                <i class="fa fa-tasks"></i> <span>Historiales</span>
+                <i class="fa-solid fa-file-medical"></i> <span>Historiales</span>
               </a>
             </li>';
             }
@@ -159,7 +159,7 @@ if (strlen(session_id()) < 1)
             </li>';
             }
             ?>
-
+<!--
             <li>
               <a href="#">
                 <i class="fa fa-plus-square"></i> <span>Ayuda</span>
@@ -172,7 +172,7 @@ if (strlen(session_id()) < 1)
                 <small class="label pull-right bg-yellow">IT</small>
               </a>
             </li>
-            <img src="../public/dist/img/imagenLentes.png" alt="Cargando" style="width: 160px; height: 160px; object-fit: cover; border-radius: 50%; display: block; margin: 0 auto;">
+            <img src="../public/dist/img/imagenLentes.png" alt="Cargando" style="width: 160px; height: 160px; object-fit: cover; border-radius: 50%; display: block; margin: 0 auto;"> -->
 
           </ul>
 

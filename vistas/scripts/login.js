@@ -10,7 +10,7 @@ $("#frmAcceso").on('submit',function(e)
     {
         if (data!="null")
         {
-            $(location).attr("href","cliente.php");            
+            $(location).attr("href","armazon.php");            
         }
         else
         {

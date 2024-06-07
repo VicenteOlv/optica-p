@@ -15,6 +15,9 @@ function init(){
 }
 
 
+function receta(id_historia){
+	window.location.href = 'resumen.php?id_historia=' + encodeURIComponent(id_historia);
+}
 
 //Función limpiar
 function limpiar()
@@ -78,10 +81,7 @@ function listar()
 	    "aServerSide": true,//Paginación y filtrado realizados por el servidor
 	    dom: 'Bfrtip',//Definimos los elementos del control de tabla
 	    buttons: [		          
-		            'copyHtml5',
-		            'excelHtml5',
-		            'csvHtml5',
-		            'pdf'
+
 		        ],
 		"ajax":
 				{
@@ -164,7 +164,7 @@ function guardaryeditar(e)
 
 	});
 	        
-	limpiar();s
+	limpiar();
 }
 
 

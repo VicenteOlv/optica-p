@@ -1,8 +1,8 @@
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
+        <b>Version</b> 2.5.0
         </div>
-        <strong>Copyright &copy; 2013-2017 <a href="www.incanatoit.com">IncanatoIT</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2014. MVPDA Software</a>.</strong> All rights reserved.
     </footer>    
     <!-- jQuery -->
     <script src="../public/js/jquery-3.1.1.min.js"></script>
@@ -19,7 +19,7 @@
     <script src="../public/datatables/jszip.min.js"></script>
     <script src="../public/datatables/pdfmake.min.js"></script>
     <script src="../public/datatables/vfs_fonts.js"></script> 
-
+    <script src="https://kit.fontawesome.com/261c60b3eb.js" crossorigin="anonymous"></script>
     <script src="../public/js/bootbox.min.js"></script> 
     <script src="../public/js/bootstrap-select.min.js"></script>  
   </body>

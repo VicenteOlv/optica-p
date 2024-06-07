@@ -11,17 +11,18 @@ Class Cliente
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($curp,$nombre,$telefono,$celular,$email,$fecha,$direccion)
+	public function insertar($curp,$nombre,$telefono,$celular,$email,$fecha,$direccion, $editado_por)
 	{
-		$sql="INSERT INTO clientes (curp,nombre_completo,telefono,celular,email,fecha_nacimiento,direccion)
-		VALUES ('$curp','$nombre','$telefono','$celular','$email','$fecha','$direccion')";
+		$sql="INSERT INTO clientes (curp,nombre_completo,telefono,celular,email,fecha_nacimiento,direccion, editado_por, fecha_actualizado)
+		VALUES ('$curp','$nombre','$telefono','$celular','$email','$fecha','$direccion', '$editado_por', CURRENT_TIMESTAMP)";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($curp,$nombre,$telefono,$celular,$email,$fecha,$direccion)
+	public function editar($curp,$nombre,$telefono,$celular,$email,$fecha,$direccion, $editado_por)
 	{
-		$sql="UPDATE clientes SET nombre_completo='$nombre', telefono='$telefono', celular='$celular', email='$email', fecha_nacimiento='$fecha', direccion='$direccion' WHERE curp='$curp'";
+		$sql="UPDATE clientes SET nombre_completo='$nombre', telefono='$telefono', celular='$celular', email='$email', fecha_nacimiento='$fecha', direccion='$direccion', editado_por='$editado_por', 
+				fecha_actualizado=CURRENT_TIMESTAMP  WHERE curp='$curp'";
 		return ejecutarConsulta($sql);
 	}
 
@@ -59,7 +60,9 @@ Class Cliente
 	//Implementar un método para listar los registros
 	public function listar()
 	{
-		$sql="SELECT * FROM clientes";
+		$sql = "SELECT clientes.*, usuarios.nombre as editado_por 
+        FROM clientes 
+        LEFT JOIN usuarios ON clientes.editado_por = usuarios.idusuario";
 		return ejecutarConsulta($sql);		
 	}
 }

@@ -13,27 +13,30 @@ else
 if ($_SESSION['armazones']==1)
 {
 require_once "../modelos/Armazon.php";
-
+$current_user = $_SESSION['idusuario'];
 $armazon=new Armazon();
 
 
 $modelo=isset($_POST["modelo"])? limpiarCadena($_POST["modelo"]):"";
 $precio_compra=isset($_POST["precio_compra"])? limpiarCadena($_POST["precio_compra"]):"";
 $precio_venta=isset($_POST["precio_venta"])? limpiarCadena($_POST["precio_venta"]):"";
-$stock=isset($_POST["stock"])? limpiarCadena($_POST["stock"]):"";
 $id_armazon=isset($_POST["id_armazon"])? limpiarCadena($_POST["id_armazon"]):"";
+$stock=isset($_POST["stock"])? limpiarCadena($_POST["stock"]):"";
+//$creado_por=isset($_POST["creado_por"])? limpiarCadena($_POST["creado_por"]):"";
+$editado_por=isset($_POST["editado_por"])? limpiarCadena($_POST["editado_por"]):"";
+//$fecha_creado=isset($_POST["fecha_creado"])? limpiarCadena($_POST["fecha_creado"]):"";
+$fecha_actualizado=isset($_POST["fecha_actualizado"])? limpiarCadena($_POST["fecha_actualizado"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':
-		if (empty($id_armazon)){
-			$rspta=$armazon->insertar($modelo,$precio_compra,$precio_venta,$stock);
-			echo $rspta ? "Armazón registrado" : "Armazón no se pudo registrar";
-		}
-		else {
-			$rspta=$armazon->editar($id_armazon,$modelo,$precio_compra,$precio_venta,$stock);
-			echo $rspta ? "Armazón actualizado" : "Armazón no se pudo actualizar";
-		}
-	break;
+        if (empty($id_armazon)) {
+            $rspta = $armazon->insertar($modelo, $precio_compra, $precio_venta, $stock, $current_user);
+            echo $rspta ? "Armazón registrado" : "Armazón no se pudo registrar";
+        } else {
+            $rspta = $armazon->editar($id_armazon, $modelo, $precio_compra, $precio_venta, $stock, $current_user);
+            echo $rspta ? "Armazón actualizado" : "Armazón no se pudo actualizar";
+        }
+        break;
 	
 	case 'eliminar':
 		$rspta=$armazon->eliminar($id_armazon);
@@ -52,17 +55,17 @@ switch ($_GET["op"]){
  		$data= Array();
 
  		while ($reg=$rspta->fetch_object()){
- 			$data[]=array(
-				"0"=>"<button class='btn btn-warning' onclick=mostrar2('$reg->id_armazon')><i class='fa fa-pencil'></i></button>	".
-					"<button class='btn btn-danger' onclick=eliminar('$reg->id_armazon')><i class='fa fa-close'></i></button>",
-				"1"=>$reg->id_armazon,
-				"2"=>$reg->modelo,
-                "3"=>$reg->precio_compra,
-				"4"=>$reg->precio_venta,
-				"5"=>$reg->stock
-                //"8"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
- 				//'<span class="label bg-red">Desactivado</span>'
- 				);
+			$formatted_date = date("d-m-Y H:i:s", strtotime($reg->fecha_actualizado));
+        
+			$data[] = array(
+				"0" => '<button class="btn btn-warning" onclick="mostrar('.$reg->id_armazon.')"><i class="fa fa-pencil"></i></button>',
+				"1" => $reg->id_armazon,
+				"2" => $reg->modelo,
+				"3" => $reg->precio_compra,
+				"4" => $reg->precio_venta,
+				"5" => $reg->stock,
+				"6" => $reg->editado_por . ' (' . $formatted_date . ')',
+			);
  		}
  		$results = array(
  			"sEcho"=>1, //Información para el datatables

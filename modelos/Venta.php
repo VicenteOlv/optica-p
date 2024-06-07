@@ -18,8 +18,9 @@ Class Venta
 		VALUES ('$total','$rfc','$id_usuario','$fecha')";
 		//return ejecutarConsulta($sql);
 		$idventanew=ejecutarConsulta_retornarID($sql);
-
+		//var_dump($id_historia);
 		if(!empty($id_historia)){
+			//var_dump("Entro el desgraciado");
 			//Aqui hay que crear el cristal, sacando los dos daignosticos de ojos, y por último creamos los dettalles
 			$sql = "SELECT id_ojo_der FROM ojo_der WHERE id_historia='$id_historia'";
 			$idOjoDer = ejecutarConsultaSimpleFila($sql)['id_ojo_der'];
@@ -28,14 +29,25 @@ Class Venta
 
 			$sql_cristal = "INSERT INTO cristales (id_ojo_izq, id_ojo_der, precio_cristal, material, recubrimiento) VALUES ('$idOjoIzq','$idOjoDer','$precio_cristal','$material','$recubrimiento')";
 			$id_cristales_new=ejecutarConsulta_retornarID($sql_cristal);
+
+			$sql_lentes = "INSERT INTO lentes (id_cristales, id_armazon, precio_lentes) VALUES ('$id_cristales_new','$id_armazon','$precio_lentes')";
+			$codigo_barras_new=ejecutarConsulta_retornarID($sql_lentes);
+		}else{
+			//var_dump("Entro el acá x2");
+			$sql_lentes = "INSERT INTO lentes (id_armazon, precio_lentes) VALUES ('$id_armazon','$precio_lentes')";
+			$codigo_barras_new=ejecutarConsulta_retornarID($sql_lentes);
 		}
 
-		$sql_lentes = "INSERT INTO lentes (id_cristales, id_armazon, precio_lentes) VALUES ('$id_cristales_new','$id_armazon','$precio_lentes')";
-		$codigo_barras_new=ejecutarConsulta_retornarID($sql_lentes);
+		
 
 		$sql_detalle = "INSERT INTO detalle_venta(codigo_barras,id_venta,cantidad,precio_venta,descuento) VALUES ('$codigo_barras_new','$idventanew','$cantidad','$precio_lentes','$descuento')";
 		ejecutarConsulta($sql_detalle);
 
+		$sql_restar = 	"UPDATE armazon
+						SET stock = stock - '$cantidad'
+						WHERE id_armazon = '$id_armazon'";
+
+		ejecutarConsulta($sql_restar);
 		/*$num_elementos=0;
 		$sw=true;
 
@@ -114,8 +126,7 @@ Class Venta
 					if ($id_cristales) {
 						$sql_cristales = "DELETE FROM cristales WHERE id_cristales = '$id_cristales'";
 						if (ejecutarConsulta($sql_cristales)) {
-							$sql="DELETE FROM ventas WHERE id_venta = '$id_venta'";
-							return ejecutarConsulta($sql);
+
 						} else {
 							echo "Error al eliminar el registro de la tabla cristales.";
 						}
@@ -131,7 +142,8 @@ Class Venta
 		} else {
 			echo "Error al eliminar el registro de la tabla detalle_venta.";
 		}
-
+		$sql="DELETE FROM ventas WHERE id_venta = '$id_venta'";
+							return ejecutarConsulta($sql);
 	}
 
 	//Implementar un método para mostrar los datos de un registro a modificar

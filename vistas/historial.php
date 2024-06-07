@@ -20,6 +20,7 @@ if ($_SESSION['historiales']==1)
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
+
                     <div class="box-header with-border" style="display: flex; justify-content: space-between; align-items: center;">
                         <h1 class="box-title" style="font-family: 'Times New Roman', sans-serif; font-size: 40px; color: black; flex-grow: 1; text-align: center;">
                             Historial médico
@@ -28,6 +29,7 @@ if ($_SESSION['historiales']==1)
                                 <i class="fa fa-plus-circle"></i> Agregar</button>
                         <!--div class="box-tools pull-right"-->
                         </div>
+
                     </div>
                     <!-- /.box-header -->
                     <!-- centro -->
@@ -39,6 +41,7 @@ if ($_SESSION['historiales']==1)
                                 <th>Fecha</th>
                                 <th>Cliente</th>
                                 <th>Observaciones</th>
+                                <th>Última edición</th>
                             </thead>
                         </table>
                     </div>
