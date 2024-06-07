@@ -30,6 +30,7 @@ if ($_SESSION['ventas']==1)
           <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
             <thead>
               <th>Opciones</th>
+              <th>Fecha</th>
               <th>Cliente</th>
               <th>Usuario</th>
               <th>Total Venta</th>
@@ -42,6 +43,8 @@ if ($_SESSION['ventas']==1)
               <label>Cliente:</label>
               <input type="hidden" name="id_venta" id="id_venta">
               <input type="hidden" name="precio_venta" id="precio_venta">
+              <input type="hidden" name="precio_lentes" id="precio_lentes">
+              <input type="hidden" name="subtotal_2" id="subtotal_2">
               <select class="form-control" name="rfc" id="rfc">
                 <option value="">Seleccione un CURP</option>
               </select>
@@ -57,14 +60,14 @@ if ($_SESSION['ventas']==1)
               </select>
             </div>
             <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-12">
-              <label>Historial:</label>
+              <label>Historiales:</label>
               <select class="form-control" name="id_historia" id="id_historia">
                 <option value="">Seleccione un Historial</option><!--Hacer que se muestre la fecha-->
               </select>
             </div>
             <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
               <label>Precio del lente:</label>
-              <input type="number" class="form-control" name="precio_cristal" id="precio_cristal" maxlength="50" placeholder="Precio" required> <!--Cambiar columna en la base de datos-->
+              <input type="number" value=0 class="form-control" name="precio_cristal" id="precio_cristal" maxlength="50" placeholder="Precio" required> <!--Cambiar columna en la base de datos-->
             </div>
             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <label>Material:</label>

@@ -1,5 +1,10 @@
 var tabla;
 var precio_armazon
+var now = new Date();
+	var day = ("0" + now.getDate()).slice(-2);
+	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+	var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $('#fecha').val(today);
 
 //Función que se ejecuta al inicio
 function init(){
@@ -31,10 +36,11 @@ function init(){
 function limpiar()
 {
 	$("#idcliente").val("");
-	$("#cliente").val("");
-	$("#serie_comprobante").val("");
-	$("#num_comprobante").val("");
-	$("#impuesto").val("0");
+	//$("#fecha").val("");
+	$("#id_venta").val("");
+	$("#material").val("");
+	$("#recubrimiento").val("");
+	$("#precio_cristal").val(0);
 
 	$("#total_venta").val("");
 	$(".filas").remove();
@@ -45,11 +51,11 @@ function limpiar()
 	var day = ("0" + now.getDate()).slice(-2);
 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
 	var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-    $('#fecha_hora').val(today);
+    $('#fecha').val(today);
 
     //Marcamos el primer tipo_documento
-    $("#tipo_comprobante").val("Boleta");
-	$("#tipo_comprobante").selectpicker('refresh');
+    $("#id_historia").val("");
+	$("#id_historia").selectpicker('refresh');
 }
 
 //Función mostrar formulario
@@ -87,14 +93,16 @@ function mostrarprecio(id_armazon)
 	    processData: false,
 
 	    success: function(datos)
-	    {                
+	    {   
+			//bootbox.alert(datos);	                 
 			var data = JSON.parse(datos);    
 	        //bootbox.alert(datos);	    
 			$("#precio_venta").val(data.precio_venta);
 			precio_armazon=data.precio_venta;
 			//console.log(precio_armazon);
 	          //mostrarform(false);
-	          //listar();
+	        //listar();
+			$("#btnAgregarArt").hide();
 			agregarDetalle(precio_armazon);
 	    }
 
@@ -138,6 +146,31 @@ function cancelarform()
 function listar()
 {
 	tabla=$('#tbllistado').dataTable(
+		{
+			"aProcessing": true,//Activamos el procesamiento del datatables
+			"aServerSide": true,//Paginación y filtrado realizados por el servidor
+			dom: 'Bfrtip',//Definimos los elementos del control de tabla
+			buttons: [		          
+						'copyHtml5',
+						'excelHtml5',
+						'csvHtml5',
+						'pdf'
+					],
+			"ajax":
+					{
+						url: '../ajax/venta.php?op=listar',
+						type : "get",
+						dataType : "json",						
+						error: function(e){
+							console.log(e.responseText);	
+						}
+					},
+			"bDestroy": true,
+			"iDisplayLength": 5,//Paginación
+			"order": [[ 0, "desc" ]]//Ordenar (columna,orden)
+		}).DataTable();
+	/*
+	tabla=$('#tbllistado').dataTable(
 	{
 		"lengthMenu": [ 5, 10, 25, 75, 100],//mostramos el menú de registros a revisar
 		"aProcessing": true,//Activamos el procesamiento del datatables
@@ -171,7 +204,7 @@ function listar()
 		"bDestroy": true,
 		"iDisplayLength": 5,//Paginación
 	    "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
-	}).DataTable();
+	}).DataTable();*/
 }
 
 
@@ -226,30 +259,30 @@ function guardaryeditar(e)
 	limpiar();
 }
 
-function mostrar(idventa)
+function mostrar(id_venta)
 {
-	$.post("../ajax/venta.php?op=mostrar",{idventa : idventa}, function(data, status)
+	$.post("../ajax/venta.php?op=mostrar",{id_venta : id_venta}, function(data, status)
 	{
+		//bootbox.alert(data);	   
 		data = JSON.parse(data);		
 		mostrarform(true);
 
 		$("#idcliente").val(data.idcliente);
 		$("#idcliente").selectpicker('refresh');
-		$("#tipo_comprobante").val(data.tipo_comprobante);
-		$("#tipo_comprobante").selectpicker('refresh');
-		$("#serie_comprobante").val(data.serie_comprobante);
-		$("#num_comprobante").val(data.num_comprobante);
-		$("#fecha_hora").val(data.fecha);
-		$("#impuesto").val(data.impuesto);
-		$("#idventa").val(data.idventa);
-
+		$("#fecha").val(data.fecha);
+		$("#fecha").selectpicker('refresh');
+		//$("#impuesto").val(data.impuesto);
+		$("#id_venta").val(data.id_venta);
+		$("#material").val(data.material);
+		$("#recubrimiento").val(data.recubrimiento);
+		$("#precio_cristal").val(data.precio_cristal);
 		//Ocultar y mostrar los botones
 		$("#btnGuardar").hide();
 		$("#btnCancelar").show();
 		$("#btnAgregarArt").hide();
  	});
 
- 	$.post("../ajax/venta.php?op=listarDetalle&id="+idventa,function(r){
+ 	$.post("../ajax/venta.php?op=listarDetalle&id="+id_venta,function(r){
 	        $("#detalles").html(r);
 	});	
 }
@@ -262,6 +295,19 @@ function anular(idventa)
         {
         	$.post("../ajax/venta.php?op=anular", {idventa : idventa}, function(e){
         		bootbox.alert(e);
+	            tabla.ajax.reload();
+        	});	
+        }
+	})
+}
+
+function eliminar(id_venta)
+{
+	bootbox.confirm("¿Está Seguro de anular la venta?", function(result){
+		if(result)
+        {
+        	$.post("../ajax/venta.php?op=eliminar", {id_venta : id_venta}, function(e){
+        		//bootbox.alert(e);
 	            tabla.ajax.reload();
         	});	
         }
@@ -299,6 +345,7 @@ function agregarDetalle(precio_venta)
 	//console.log(valor_cristal);
 	//console.log(precio_armazon);
 	var valor_lente = parseInt(valor_armazon) + parseInt(valor_cristal);
+	$("#precio_lentes").val(valor_lente);
 	console.log(precio_venta);
     	var subtotal=cantidad*(valor_lente);
     	var fila='<tr class="filas" id="fila'+cont+'">'+
@@ -311,6 +358,7 @@ function agregarDetalle(precio_venta)
     	'</tr>';
     	cont++;
     	detalles=detalles+1;
+		$("#subtotal_2").val(subtotal);
     	$('#detalles').append(fila);
     	modificarSubototales();
 
@@ -331,6 +379,7 @@ function agregarDetalle(precio_venta)
 
     	inpS.value=(inpC.value * inpP.value)-inpD.value;
     	document.getElementsByName("subtotal")[i].innerHTML = inpS.value;
+		$("#subtotal_2").val(inpS.value);
     }
     calcularTotales();
 
