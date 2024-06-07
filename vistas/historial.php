@@ -35,6 +35,7 @@ if ($_SESSION['historiales']==1)
                                 <th>Fecha</th>
                                 <th>Cliente</th>
                                 <th>Observaciones</th>
+                                <th>Última edición</th>
                             </thead>
                         </table>
                     </div>

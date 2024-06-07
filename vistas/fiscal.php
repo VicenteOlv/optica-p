@@ -35,6 +35,7 @@ if ($_SESSION['ventas']==1)
                             <th>RFC</th>
                             <th>Regimen</th>
                             <th>Curp</th>
+                            <th>Última edición</th>
                           </thead>
                         </table>
                     </div>

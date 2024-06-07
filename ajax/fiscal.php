@@ -13,7 +13,7 @@ else
 if ($_SESSION['ventas']==1)
 {
 require_once "../modelos/Fiscal.php";
-
+$current_user = $_SESSION['idusuario'];
 $fiscal=new Fiscal();
 
 
@@ -21,18 +21,19 @@ $fiscal=new Fiscal();
 $rfc=isset($_POST["rfc"])? limpiarCadena($_POST["rfc"]):"";
 $regimen=isset($_POST["regimen"])? limpiarCadena($_POST["regimen"]):"";
 $curp=isset($_POST["curp"])? limpiarCadena($_POST["curp"]):"";
-
+$editado_por=isset($_POST["editado_por"])? limpiarCadena($_POST["editado_por"]):"";
+$fecha_actualizado=isset($_POST["fecha_actualizado"])? limpiarCadena($_POST["fecha_actualizado"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':
 		
-			$rspta = $fiscal->insertar($rfc, $regimen, $curp);
+			$rspta = $fiscal->insertar($rfc, $regimen, $curp,$current_user);
 			echo $rspta ? "fiscal registrado" : "fiscal no se pudo registrar";
 		
 		
 	break;
 	case 'editar':
-		$rspta = $fiscal->editar($rfc, $regimen, $curp);
+		$rspta = $fiscal->editar($rfc, $regimen, $curp,$current_user);
 		echo $rspta ? "fiscal actualizado" : "fiscal no se pudo actualizar";
 	break;
     case 'selectCliente':
@@ -73,12 +74,14 @@ switch ($_GET["op"]){
  		$data= Array();
 
  		while ($reg=$rspta->fetch_object()){
+			$formatted_date = date("d-m-Y H:i:s", strtotime($reg->fecha_actualizado));
  			$data[]=array(
 				"0"=>"<button class='btn btn-warning' onclick=editar(false,'$reg->rfc')><i class='fa fa-pencil'></i></button>	".
 					"<button class='btn btn-danger' onclick=eliminar('$reg->rfc')><i class='fa fa-close'></i></button>",
 				"1"=>$reg->rfc,
                 "2"=>$reg->regimen,
-                "3"=>$reg->curp
+                "3"=>$reg->curp,
+				"4" => $reg->editado_por . ' (' . $formatted_date . ')',
                 //"8"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
  				//'<span class="label bg-red">Desactivado</span>'
  				);

@@ -164,7 +164,7 @@ function guardaryeditar(e)
 
 	});
 	        
-	limpiar();s
+	limpiar();
 }
 
 

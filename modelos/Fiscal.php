@@ -11,24 +11,18 @@ Class Fiscal
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($rfc,$regimen,$curp)
+	public function insertar($rfc,$regimen,$curp, $editado_por)
 	{
-		$sql="INSERT INTO fiscales (rfc,regimen,curp)
-		VALUES ('$rfc','$regimen','$curp')";
-		return ejecutarConsulta($sql);
-	}
-	public function listarN()
-	{
-		$sql = "SELECT c.rfc, p.curp, p.nombre_completo 
-				FROM fiscales c 
-				JOIN clientes p ON c.curp = p.curp";
+		$sql="INSERT INTO fiscales (rfc,regimen,curp, editado_por, fecha_actualizado)
+		VALUES ('$rfc','$regimen','$curp', '$editado_por', CURRENT_TIMESTAMP)";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($rfc,$regimen,$curp)
+	public function editar($rfc,$regimen,$curp, $editado_por)
 	{
-		$sql="UPDATE fiscales SET regimen='$regimen', curp='$curp' WHERE rfc='$rfc'";
+		$sql="UPDATE fiscales SET regimen='$regimen', curp='$curp', editado_por='$editado_por', 
+				fecha_actualizado=CURRENT_TIMESTAMP WHERE rfc='$rfc'";
 		return ejecutarConsulta($sql);
 	}
 
@@ -66,7 +60,9 @@ Class Fiscal
 	//Implementar un método para listar los registros
 	public function listar()
 	{
-		$sql="SELECT * FROM fiscales";
+		$sql = "SELECT fiscales.*, usuarios.nombre as editado_por 
+        FROM fiscales 
+        LEFT JOIN usuarios ON fiscales.editado_por = usuarios.idusuario";
 		return ejecutarConsulta($sql);		
 	}
     public function obtenerCurps(){
