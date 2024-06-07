@@ -25,12 +25,11 @@ if ($_SESSION['historiales']==1)
                         <h1 class="box-title" style="font-family: 'Times New Roman', sans-serif; font-size: 40px; color: black; flex-grow: 1; text-align: center;">
                             Historial médico
                             </h1>
-                            <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)" style="margin-left: auto;">
+                            <button class="btn btn-secondary" id="btnagregar" onclick="mostrarform(true)" style="margin-left: auto;">
                                 <i class="fa fa-plus-circle"></i> Agregar</button>
                         <!--div class="box-tools pull-right"-->
                         </div>
 
-                    </div>
                     <!-- /.box-header -->
                     <!-- centro -->
                     <div class="panel-body table-responsive" id="listadoregistros">
