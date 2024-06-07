@@ -37,7 +37,7 @@ if (strlen(session_id()) < 1)
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="escritorio.php" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>MV</b>PDA</span>
           <!-- logo for regular state and mobile devices -->
@@ -96,7 +96,7 @@ if (strlen(session_id()) < 1)
             if ($_SESSION['escritorio']==1)
             {
               echo '<li id="mEscritorio">
-              <a href="#">
+              <a href="escritorio.php">
                 <i class="fa fa-tasks"></i> <span>Escritorio</span>
               </a>
             </li>';
