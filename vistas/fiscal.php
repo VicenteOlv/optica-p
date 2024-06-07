@@ -21,9 +21,13 @@ if ($_SESSION['ventas']==1)
             <div class="row">
               <div class="col-md-12">
                   <div class="box">
-                    <div class="box-header with-border">
-                          <h1 class="box-title">Datos fiscales<button class="btn btn-success" id="btnagregar" onclick="mostrarform(true); editar(true);"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
-                        <div class="box-tools pull-right">
+                    <div class="box-header with-border" style="display: flex; justify-content: space-between; align-items: center;">
+                      <h1 class="box-title" style="font-family: 'Times New Roman', sans-serif; font-size: 40px; color: black; flex-grow: 1; text-align: center;">
+                            Datos fiscales
+                            </h1>
+                            <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true); editar(true);" style="margin-left: auto">
+                            <i class="fa fa-plus-circle"></i> Agregar</button>
+                        <!--div class="box-tools pull-right"-->
                         </div>
                     </div>
                     <!-- /.box-header -->
