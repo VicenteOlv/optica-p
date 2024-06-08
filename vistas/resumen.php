@@ -10,7 +10,7 @@ else
 {
 require 'header.php';
 
-if ($_SESSION['ventas']==1)
+if ($_SESSION['historiales']==1)
 {
 ?>
 <style>
